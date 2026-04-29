@@ -1,0 +1,1040 @@
+Hi, hello everyone, this is Luca and this is the continuation of our two-part series about WebGL
+and then post-processing with WebGL and in this part we're going to continue from where we left off
+which is this effect which we created and by the end of this video we're going to try to create this kind of effect
+and the good part of this kind of effect and really the goal of this video is for you to be able to create all kinds of effects
+with the knowledge that you're going to get here and for example this effect uses multiple textures
+this is really important and it uses kind of time and a bit of randomness as well
+just to create this kind of effect and you can see scanlights go here, here it's banded a bit like we're going to get to it
+anyway the important part is what is the important part?
+yeah the important part is you're probably going to be able to create this kind of effects by the end of this video
+and if you haven't followed or you just joined or maybe you just want to download the code and then start again
+so we were working on post-processing and we had part one, we're done with that and now we're in part two
+so if you don't want to continue or you just join you can download basically this, the link will be in the description below
+go to WebGL, set up part two and you can download the start so this will be our starter point
+or you can download the end as well and then just follow the video and play the video code
+the end is just something that we're going to have by the end of this tutorial
+also for this kind of video, for this video you're going to need these textures
+so we're going to be using all three of them and you can download them from the link which will be also in the description of the video
+and with that we can get started so we have this and now let's just add our textures
+which I already downloaded so like I mentioned we're going to be using the noise texture, the scan lines as well
+and this we need kind of effect, first we're going to do we need the effect
+so let's see, just add it here and then we're ready
+we can already probably start so let's see what we're going to be doing
+just a second
+okay let's see, so what do we want to do?
+let's take a look at this thing here
+so if you don't know what I'm going to be doing now, I'll make this point a second
+but basically what I'm using here is a Specter JS
+it's a plug-in for either Chrome, sorry Chrome or Firefox
+I'm not sure about the other browsers but you can probably find it by looking for Specter JS
+and see if your browser is supported that you can download and then if you have a WebGL render
+and you can just record a whole frame and then you basically see all your WebGL calls
+and what we were doing for example we were drawing a cat here and we have this cat
+right, texture and then we have a second call for draw elements which was for these folks
+et cetera et cetera and then by the end when we were doing this effect
+we were using post-processing, sorry we were using WebGL FrameBuffer with Color Attachment 0
+you can see here, FrameBuffer, we were rendering basically to texture
+and then by the end we were actually rendering to our screen which is Canvas FrameBuffer
+because we were rendering it to Canvas element in HTML
+and then you can see here we were using our screen texture
+we were going to do that FrameBuffer to this texture
+and then we were using it and then creating this kind of effect
+gray scale with our original texture
+that multiplied by some values which gave us kind of brightness value
+if you will or luminance and then we just use these luminance for RGB and what is gray scale effect
+so what we are going to be doing now, what am I doing?
+I am not sure, let's see what we are going to do now is just to have multiple textures
+combine them, maybe offset them or do some calls
+we are going to be using this as well a bit later and then we are just going to create a sphere
+t effect which I can solve when I post a video
+anyway not that important so let's get started with this
+here in the main TS
+so probably we are going to need this
+very rough texture location, maybe a real texture
+so because we are working with multiple textures
+so we are going to need to know addresses essentially of them
+and then we have to reference them from the CPU to the GPU to tell
+ok now use texture 0, texture 1 which will be our screen texture, maybe randomness
+sorry noise texture, maybe we will have this kind of vignette effect
+so we are going to need all of this and then we are going to need
+vignette
+so let's just go with vignette texture which is here this one
+so first we are going to do this kind of edges
+on the end of the screen so what we are trying to do is
+here this where are you, CRT
+CRT television, yeah that's good
+so we are going to try to emulate this kind of old TVs
+maybe by adding this kind of edge effect
+so you can use different textures as well later on
+so let's start it, I need this, I need this
+and I need this so vignette
+we are doing vignette texture, maybe real texture
+and then we also need location
+right, ok so here we are going to need the address
+for texture location, GL, get uniform
+and I am going to use, sorry we need the first best shader used
+if you remember it was post process program
+and I am going to call it texture 0
+so I am probably going to have to rename it
+and then here it is back to your uniform location
+because if you remember now as well
+so we just need to cast it and then then
+where is it, where is our setup?
+ok let's do it here
+function, setup, CRT textures
+maybe something like that
+we just need to call it here
+and then then let's load out textures
+let's shamelessly copy paste from here
+to here and this will be our
+I always do this
+vignette
+ok that's vignette so here
+we are not passing here
+this we are passing here
+I believe it is called vignette
+texture so basically this ID
+which we
+you added here
+write this one
+we are getting this image element by ID
+and then
+paste it right here
+and then you just have to cast it
+to HTML
+or HTML image element
+that should be fine
+if you remember
+we had this create
+texture function
+basically which creates webgeo
+texture binds it
+passes data to it
+here it passes image or canvas
+HTML element
+and then just set of some
+parameters and then it turns the texture
+so where were we?
+we were somewhere
+here
+ok that's fine
+so this is
+important part which we need to do
+gel
+plot bind
+texture
+gel
+texture to the
+not one
+to the actually
+here we need
+rainbow texture
+because we are going to be using multiple textures
+multiple textures we really need to set this up
+so that our frame buffer
+knows what to use
+maybe
+probably better here
+and then
+here after we use the
+program
+we are going to have the frame buffer texture
+but we also need to
+paste some additional data
+so here we will be using this
+and we are going to say
+frame buffer
+texture cation 0
+is this should be fine
+gel
+active
+texture
+gel
+I am going to explain the second
+so let's just type in the screen
+texture
+it's shamelessly
+copy and paste it
+and let's just say
+we need
+so you can guess what we are going to do here
+we need
+we are going to be paste
+here and here
+we need
+actual
+here might be location
+let's do here
+effect
+so let's rename this
+texture to texture one
+and then just
+here screen
+texture
+so basically
+when you are working
+it
+will create this
+sample location
+this might be 0
+this might be 1 in that order
+because in programming everything starts from 0
+and basically
+what we want to do is
+just say
+okay
+this texture
+goes to 0
+let's activate the texture 0
+so we are saying
+this and this texture
+and then we just say
+which texture to buy
+anyway
+this is a bit hard to explain
+I really hate this API
+but essentially what we are doing here
+is just setting up
+our frame buffer texture
+with the location
+to the unit 0
+and here
+it must be unit 1
+so we are setting 1
+to 0
+and here
+now we are going to use those textures
+let's do
+here
+let's just
+call it
+for screen
+let's just pick color
+okay
+we don't need that
+we don't need this
+so we are just going to return
+our original texture
+color
+and let's deal with the texture
+you need to 1
+in a second
+of course that this
+had to happen
+because I probably have a box somewhere
+let's see
+actually
+let me do this
+let's see
+oh
+texture 7
+cannot convert
+that's interesting
+that's interesting
+did you fresh everything?
+one bug is probably here
+it's this
+thing
+let's define as well
+oh
+oh
+oh
+wow
+brilliant
+okay
+alright
+this is wrong
+but it's okay
+let's see
+what am I doing here
+cool
+you haven't really programmed
+if you never run into bugs
+that's quite common
+and then he
+what did I say?
+I said
+oh boy
+here this
+this is not important
+what's important is
+it's already going to know
+which texture to use
+remember first here
+I actually wanted to do this
+here
+we have to return
+because right
+we here bound
+to 1
+and now we have to return it
+back to GL
+texture
+I guess it
+0
+okay
+interesting
+let's try to do this
+instead
+if I mix up the texture units
+I have somehow
+I mix up the texture units
+wow for me
+oh that's
+because I wanted to use actually
+texture 1 here
+so let's see
+that's life
+remember for texture
+texture
+see
+ah
+no
+no
+maybe it's just the fact
+that I'm using both textures
+and then
+shaders doing something
+wrong here
+okay let's go like this
+and then let's give
+4 we need
+color
+texture 1
+texture chords
+alright
+and then
+let's just multiply
+them together
+see what happens
+okay perfect
+now we're using our
+original texture
+this one and we're using our
+net and this gives us
+when we multiply
+because our net
+is
+right here it's white
+here it's black
+if you multiply the color
+back is represented by 0
+color white by
+1 if you multiply
+basically
+original color by 1
+you're going to get the
+original color because it's
+multiplied by 1
+and here we multiply by 0
+so it gets darker
+so therefore it's black
+okay and let's just
+see our texture units
+are they
+are the texture units
+correct
+because I'm not sure
+yes this should
+be actually screen texture
+texture unit 0
+so that's a bug
+alright
+found a bug you might have noticed
+but when we bounded
+the texture location
+I forgot to say
+use texture
+1 instead of texture
+0 right because our net
+texture is texture 1
+so I think that should
+solve it
+let's try it
+let's just see how
+the texture units
+are they correct now
+okay
+yep
+oh size one that's okay
+and then here is
+texture okay
+that part is finished
+so now the second part
+is we're going to create
+this try to create this kind of
+bend effect here
+alright to bend a bit
+so to really get that
+CRT kind of
+effect so
+for this
+let's see
+yeah let's type it first
+and then I'll explain
+so we need this
+so we're going to create
+different coordinates
+so we're going to take
+the original ones which is really
+and then we're going to
+give some kind of
+bend effect
+I'm going to get to that
+so what do we want to do here
+just pair
+with me
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+and then
+then I'm going to need to
+undo this and
+let's see
+and then
+let's do this
+we're going to
+have the original ones
+and we're going to
+CT, UV
+which is just going to be this
+UV
+and maybe some small
+factor
+let's actually do 0.5
+and then instead of
+for the original ones we're going to use this ones
+and here
+here
+this is what happens
+okay so let's explain it
+I'm just going to use
+smaller bend factor
+for now maybe 0.2
+okay
+so basically we have
+our original image
+with texture coordinates
+grow from 0 to 1
+and we're trying to do something like this
+let's use this
+graphing calculator
+and let's just say 1
+all right
+one is not that useful
+but what we're really trying to do is
+come up with texture coordinates
+that are going to be
+bend that a bit and how
+did I do that so basically
+we need something
+that goes squared
+and you can see here
+this is really nice
+so basically if we have our
+oh wow
+this is probably
+good
+let's try it to
+draw a bit
+just see
+oh come on now
+here we call
+whatever
+let's
+so basically
+we have our screen
+coordinates right
+oh boy
+terrible drawing anyway
+and for this screen
+coordinates like
+if you imagine like here
+like this old kind of
+trying to do is like
+bend it here a bit
+right
+and bend it here a bit
+so that our texture
+we'll also
+if we had original one
+here it might be
+bend that a bit
+it might end up something
+like this anyway
+yeah so
+we're just trying
+to bend
+the original one
+and then we're probably
+going to have a bit
+bend that at the
+corners right
+something like this
+sorry for the terrible
+drawing but let's get to it
+and how do we do that
+you can see it here
+it's bend that a bit
+but you you can just
+graph it right
+if you know that our texture
+function gives us this
+kind of bend so you
+this is linear right
+so you need something
+squared and then you just
+need some
+factor which is going to
+really bend it a bit maybe
+something like
+1.2 no no we actually
+need small factor right
+you can see you can see it
+right here so we had
+0 to 1 and then then
+we'll just just
+just basically
+polynomial squared function
+like it's going to
+make you you can figure out
+how to bend the
+screen coordinates right
+so here we only care about
+basically 0 to 1
+here
+these are our screen coordinates
+0 to 1 and then you can see
+how it's bend it here and then
+this chances to
+bend right we did this
+right is because
+let's explain it
+here
+move from 0 to 1
+2 minus 25
+to 0 to 5 space
+right we move
+from one space to other and then
+just move
+move
+from
+2 minus 1 to 1
+space right
+we need to bend both
+in both directions
+so so so so so
+are you here right
+you can see it also works
+for
+negative as well
+all right
+and then
+just just as we did that
+we just need to reverse
+right we need to
+return to 1 to 0 space
+and we do that here right
+so here
+we will say move
+back to minus 0.5
+to 0.5 space
+and then
+we have to move back
+all right
+move back to
+1 to 0 space
+all right and that's
+essentially how we did it
+and then this function
+is just
+like I mentioned
+it won't work
+with negative as well
+I mean it will
+it will if you
+remove absolute
+it's just going to be
+super weird
+probably
+actually it's not that bad
+maybe it works
+but it's returning back
+anyway
+but basically
+power of 2
+in WebGL
+you kind of scare
+okay power of 2
+here
+2 and then we just have some
+band factor which is same
+as here it's just some
+small value which will bend
+this thing
+and that's it
+okay let's go
+further
+further what are we going to do next
+we bend this here a bit
+let's do noise
+noise will be awesome
+okay
+okay soft
+shamelessly
+copy paste here
+here then just
+go here
+and say noise
+okay
+then
+and then we just say
+noise
+copy paste
+being lazy
+noise
+here
+it's called noise
+now we're going to be using
+textures here
+2
+just looking if it's all right
+it is and then
+we can paste
+third textures
+same as here
+noise
+must be 2
+this must be
+noise
+and here
+as well
+nice texture
+okay let's just form
+my code
+here let's go here
+let's see if I
+love using texture
+0, texture 0, texture 1
+it just is you think about but this
+can be named differently
+all right let's just check
+once more
+did I bind it?
+oh okay
+must be texture 2 here
+that's all right
+and then
+texture 2
+texture coordinates here
+and then then then
+oh let's do this
+actually times equals
+we can just think for a second
+how do I want this to do this?
+yeah okay
+and let's just add noise here
+and for that
+we're going to do something
+with different
+we're going to say mix
+so basically we're going to mix
+or not multiply
+anymore our color
+with noise color and let's just
+take 0.5
+for now
+let's see if that actually worked
+it actually did
+so what did we do here?
+we just paste our noise texture
+let's check it here
+all right
+we have our screen texture
+all right
+we have our screen texture
+all right
+we have our screen texture
+and finally our noise texture
+and why did we paste our noise texture
+to have a bit of a noise?
+you know this old screens
+had a bit of a noise to them
+and here we
+actually used one texture
+we used second texture
+and we kind of merged them together
+half half
+maybe I'll just show it quickly
+so this might be easier to understand
+so if I say one
+if I say
+0.5
+I did something wrong here
+what's wrong here
+aha
+aha
+yeah yeah
+can be 0.1
+that's an integer
+so you must use this moment
+so it's for noise texture
+if I use 0.0
+let's put this
+if I use some
+small value like 0.1
+it's a bit noisy
+so yeah there is a bit of noise
+but more of our original image
+so it's just kind of linear
+it teleports
+between the two textures
+you can play with it
+so to figure it out
+but anyway we're going to do this
+and now
+what are we going to do now
+yeah let's just do this
+let's paste some
+float
+random
+it must be uniform
+for our noise texture
+we're going to use
+0.2
+x plus
+all right we're going to randomly
+move to that texture
+so that we can animate
+this noise a bit
+and I'm going to also explain
+the second but so what do we need
+okay we need
+here
+please listen to me
+random
+location
+so it will be WebGL Unique
+from location
+we call it set up
+security textures
+maybe we can rename it later
+I'll use this here
+our random location
+in GL
+get uniform
+location, post process program
+and random
+we call it random
+as we have GL
+uniform location
+maybe I should zoom in
+okay what are we doing here
+we define random here
+and we just need
+to somehow reference it
+we can send it
+from the CPU to the GPU
+okay and then just here
+somewhere
+after we bind
+the post process
+program after we say use program
+or you can do it
+anywhere
+between the draw elements in use program
+so I'll just wait here
+and what do we paste now
+so you must be careful now
+we're passing float
+uniform one float
+so we're passing one float
+if you remember it's its float
+shader and
+so
+just
+I'm so tired
+I'm forgetting the arguments here
+so random location
+and we're just going to paste
+my random
+that's okay
+that is okay
+generally
+yeah, that should be okay
+and you can see now
+it's been deterring but it looks
+bit weird
+you might not notice it
+but it doesn't look correct
+and that's because it's
+actually it's claimed
+to edge
+actually let's do this
+and then it will be easy to
+explain
+let's just not paste my random
+for now you can leave it
+maybe
+okay
+and do
+noise
+yes, you can see it now
+so basically
+our texture is claimed to edge
+so when it's out of this screen
+coordinates, sorry
+the texture coordinates that goes
+0 to 1, the default
+behavior is just to use
+the edge of the pixel
+we'll basically use it
+indefinitely so what we need to do is
+just change a texture
+function of it
+so instead of doing this
+this should be easy
+let's just
+say
+where are you? create texture
+noise texture
+let's just have second parameter here
+let's go to create texture
+and
+use
+let's just say
+claim to edge
+equals
+true and we have this
+filters here, claim to edge
+so basically texture
+wrapping 1, it gets to 0
+it will use the last
+pixel
+we're probably going to
+understand now it's
+weird to explain
+all right
+if I do this second
+and
+else
+but before we claim to edge
+and let's just
+just
+repeat
+repeat
+all right
+you can see
+now it repeats the texture
+so you can use
+also mirror
+let's see now
+maybe this is
+even looks better
+mirror to pit
+you can see
+it now looks
+more naturally so this is
+mirror to pit and if you
+claim to edge
+it does this here
+so it basically plants
+so this is
+you coordinate
+or ST or this is
+you can use
+gel
+i'm going to use
+mirror to pit
+you see here
+all right
+google it, play with it
+and
+figure it out
+probably
+figure it out
+anyway
+let's turn this
+let's actually turn
+make random
+here
+where were you
+here
+so it's going to be
+you see
+now it has a bit of
+noisiness
+maybe I can only
+prove it a bit, let's just
+do this
+and minus one
+so it goes from minus
+one to one
+anyway, it's not that
+important
+and here
+we're just going to use
+0.2
+okay, that's quite
+high where you
+still high
+this is a bit okay
+but
+so you
+might want it to be
+barely visible
+that's fine as well
+I'm not sure
+I will
+you get the idea
+and
+finally
+our last texture
+that we need to
+finish our
+shader
+let's do
+this
+kind of
+like texture
+and line
+let's
+just create a time
+okay, so we probably need
+time
+okay
+let's go
+I think I called it scanline, actually already know the drill, so we are going to use time
+here.
+I am going to get to it in a second.
+Okay.
+And we actually need a time here.
+So every frame, let's just say increase our time.
+I am going to explain it in a second as well, let's just paste everything here.
+Ah, scan my textual location.
+We already know it.
+Okay.
+See, it's just adding textures and then playing with the values, we are going to need time, load time.
+Okay.
+We are not going to use time for now, I am just putting it so that we basically almost finish here.
+Scanline color, shame must be copied paste here.
+Okay, but this is not going to be a random, so maybe better to paste here shamelessly and then just say texture 2.
+Texture coordinates.
+Actually, let's use your texture coordinates.
+And this must be texture 3.
+And then at the end we have to mix it as well.
+And let's just go with really lots of groups.
+And then we need to fix the bug.
+Image your canvas is now.
+Okay, that's easy one.
+So I messed up the name.
+It's called scanline texture.
+And I probably said scanline.
+Yes, I did.
+Perfect.
+Alright, we are almost done here.
+So let's just tone it down a bit.
+Alright, just see what's going on.
+So basically we have our scanlines, but if you remember, when I showed previous effect, the scanlines are supposed to move.
+And that's why we use time.
+Right, and then we can make time by small amount each frame.
+So for each frame of animation time, because it becomes slightly bigger.
+And now we can just use it here.
+Time and then we can just say, okay, here, actually use x.
+Don't touch x, that's fine.
+And then just y plus time.
+And what's it's going to do is.
+It's going to look actually really, really fast.
+Obviously that's not something that I want to do, but it's easy to fix.
+We can just say, where is my time?
+Where is my time?
+Increase a bit less, maybe.
+Okay, let's sit here.
+You can see it's scrolling.
+Still really fast though.
+Let's just do here.
+Let's set a bit of randomness of time.
+You actually don't want to do this.
+You can only need the delt time between previous and current frame, but anyway, that's not part of this video.
+And I think it might be fine now.
+You can see it's scrolling a bit.
+Can we improve it?
+Can we improve it even further?
+We can.
+Let's see, scan lines are now really, really, really.
+I want them to be a bit thicker.
+Let's just do this.
+So this will increase them a bit.
+And I think this should be minus time.
+Okay, you can probably see them moving.
+And that's fine.
+So let's do this.
+Yeah.
+It's a bit difficult to see though.
+But anyway, that's kind of it.
+The rest of the work is just adjusting things a bit, maybe playing with it.
+So I can see this kind of.
+I'm not sure if you see it, but I'm bothered, but this kind of mirror like effect.
+And that's because of this.
+So I might just do repeat.
+I think it will better.
+It does a bit, but it's not that much better.
+But anyway, the rest of it is just playing with values a bit.
+Maybe you can use a bit different scan lines, a bit thicker or whatever.
+I don't even need to do X. X can remain as it is.
+It's only why that's relevant.
+Exactly.
+So you can play with the values here.
+You can mix colors more or less.
+You can also change the textures.
+You can use textures that you want to use.
+The important part is probably learn how to use this tool as well.
+This will really help you.
+Here you can see all the textures that you use, but you can just download any texture.
+Replace it, play with the values.
+Maybe do something differently.
+For example, one nice effect that I didn't do here.
+I might do it quickly, but it's really nice effect to use.
+For example, it's this.
+You can say here here.
+And let's say this is a original core.
+Let's say it like this.
+REC4Color.
+REC410.
+OK, and then that's OK.
+Let's just say here if I move this.
+For example, this one is really easy effect to figure out.
+What I'm doing is just chromatic aberration.
+I wasn't even planning for this, but OK.
+It's fine.
+Then we can do plus 2 0.01.
+Maybe and then 0.0.
+And then just say red.
+Here we're just going to say green.
+And then here.
+Oh, something is a bit slow on mine.
+And we can say negative.
+And then we can say probably blue.
+I think it should work.
+You can see this kind of chromatic aberration effect.
+So basically we get this when we offset colors a bit, right?
+If you take a color, which is RGB and try to offset green a bit,
+try to offset the blue a bit from red or whatever.
+You get this kind of chromatic aberration effect.
+Anyway, that's it.
+Hopefully you enjoyed it.
+I will leave all the links that might help you in the comments below.
+And yeah, that's it.
+Hopefully you enjoyed the video and all the best.
+And yeah, that's it.
+Hope you had fun with this video and hope that you learned it.
+And good bye.

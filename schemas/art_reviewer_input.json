@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "art-reviewer-input",
+  "title": "Art Style Reviewer Input",
+  "type": "object",
+  "required": ["game_dir", "screenshot_paths", "target_style"],
+  "properties": {
+    "game_dir": {
+      "type": "string",
+      "description": "Absolute path to the game project root directory"
+    },
+    "screenshot_paths": {
+      "type": "array",
+      "description": "4 screenshot file paths (title screen, gameplay, dialogue, menu)",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "type": "string" }
+    },
+    "target_style": {
+      "type": "string",
+      "description": "Target aesthetic identifier",
+      "enum": ["y2k_dark_cyan", "y2k_liminal", "y2k_brutalist", "y2k_vapor"]
+    },
+    "css_files": {
+      "type": "array",
+      "description": "List of CSS file paths to audit",
+      "items": { "type": "string" }
+    },
+    "html_file": {
+      "type": "string",
+      "description": "Main HTML entry point path"
+    },
+    "scene_configs": {
+      "type": "array",
+      "description": "Three.js or rendering scene config files to audit",
+      "items": { "type": "string" }
+    },
+    "art_bible_path": {
+      "type": "string",
+      "description": "Optional path to ccgs-art-bible reference document"
+    }
+  }
+}

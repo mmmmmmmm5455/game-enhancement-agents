@@ -1,0 +1,302 @@
+Three months ago, I made a video on a PSX shader to make your game look like a PSX game.
+It was for Universal Enterprise Line in Unity, and well, it does exactly as its name suggests.
+It kind of makes your game look like it's a PS1 game.
+Then a few days ago, I saw this video, the YouTuber here talks about the basics of setting up a PS1 style project in Unity.
+But watching the video, I realized something.
+The things that he tells you about, they're just like very basic at the very beginning,
+like the very bottom of the battle stuff, the very bare bone of starting up a project.
+Even though he just talks about very basic stuff, a lot of gray areas were left out for beginners who just want to get into this genre.
+These gray areas can potentially leave newcomers to just, you know, hanging around not understanding what they're supposed to do.
+So in this video, I'm going to be talking about how you can properly set up a project to make it look like a PSX game.
+The things you have to do, the things you have to look out for, the errors you can make, and how to fix the most common problems.
+Also, I'm going to be giving a step-by-step tutorial.
+Most of the beginner-friendly concepts and the beginner-friendly things are going to be covered in this video.
+But I would recommend you watching the original video as well.
+And consider this video as a sort of like a sequel or maybe a prequel to the original video.
+So go ahead and watch that first.
+This video is going to be separated into a few segments.
+First view being how to set up the scene, what shaders to use, how to set up the shaders,
+second parts being the visual look, the aesthetics, and the post-processing effects that you want to use,
+the way you would interpolate the scene and et cetera, et cetera.
+So without wasting time, let's get started.
+Starting off with the skybox.
+Skybox is very important when you're making a game like this.
+Now, the skybox depends so early on what kind of game you're making.
+If you're going for a game that has a different kind of aesthetic, then you're going to have to pick up a skybox that's similar to that.
+I would recommend you going around Google searching up cube maps for specific skybox,
+because you don't really need any high-resolution skybox or anything.
+Any photo from the Google images would do just fine.
+Drag-and-drop the image, set it as a cube, create a new material, search for cube map, and then just assign the material to it,
+and then just drag-and-drop the material to your scene, and it should automatically apply itself.
+We are on with the exposure and the tin color of your skybox to determine what kind of look you're going for.
+This is purely aesthetic based, so each one is going to be different.
+For me, I went with something like this.
+To keep the video faithful to the original video that it's a sequel of people to.
+Now, time for downscaling the texture.
+The thing that brought that iconic look to the PS1 games were the low-resolution textures it used.
+Now, back in the days, PS1 games didn't really have a lot of space to work with.
+Each one of the textures were around 64x64 pixels, basically stating that the textures were not that big at all,
+so which resulted in some crispy and quirky-looking textures, which is something that we're going to have to look for, like, you know, trying to recreate the same graphics.
+It's a very important part, so we can't miss it.
+Luckily for us, Unity has a built-in weighted downscale textures.
+Also, while you're downscaling it, make sure to set the filtering mode to point no filter, because PS1 games had no filtering option to it.
+So, go ahead and downscale the texture as much as you want to.
+Don't do it too much, but do it till you get something that's sort of pixelated, but not that subtle.
+If you were to do it too much, you would be left with a huge pixelated mess that basically looks like shit.
+So, once you get something that you're happy with, let's move on to the shaders.
+For this one, we're going to be using the URPPSX, the one that I previously, you know, made a video about.
+You can go ahead and watch that video if we want, like, a lot of details, but for now, just download it and slap it onto your project.
+So, once you have the shader ready, go ahead and get some 3D models to, you know, test the shader on, I don't know, whatever.
+And now, let's start by creating the very first thing, the terrain.
+For the terrain, I'm not going to be using any separate 3D models or anything.
+I'm going to be using the Unity's terrain system.
+Now, you might be asking yourself, does this terrain, like, have all the functionalities for being a PS1 terrain?
+Well, actually, yeah. You can actually create a low-revolution, low-poly terrain right from Unity.
+You don't really need any kind of 3D modeling software or any kind of extra mesh or anything.
+So, I'm going to start by lowering the terrain size.
+So, go into the settings and I'm just going to set it to 520x520.
+Then, what you want to do is to just start sculpting your terrain and make it look like it had a landscape or something.
+Go ahead and be rough and just create random shapes and just, you know, hills and tops.
+It doesn't really matter, and it doesn't even matter if it just looks way too detailed.
+You're going to be making it a little poly just in a bit.
+But, just for now, create a terrain that looks somewhat, you know, like a terrain or something that you can place trees around.
+It completely depends on what kind of game you're making.
+So, yeah, just be creative with yourself.
+Okay, now go to this option, the terrain hike resolution and start changing the revolution.
+You can just go ahead and, you know, lower it as much as you want to.
+I would recommend you setting it to something like 64x64 to get that low-resolution, low-poly look on the terrain.
+So, once that's done, it's time for texturing.
+Create a new material and assign the text to it.
+Now, don't worry about this red glow around the material.
+We're going to be fixing it just in a bit.
+So, this is the material that we're going to be assigning to the terrain.
+Go ahead and need the settings and just assign this material to the terrain.
+On the material from here, search for URPSX and you should get this.
+So, I'm going to be selecting this taken option for now.
+Just to, you know, demonstrate, but we're going to be changing that in a bit.
+Now, assign your material that you want to give your terrain.
+And you should already have something that looks somewhat like a PS1 game.
+But, just go ahead with the tiling option and just set the tiling to something that, you know,
+makes your terrain look good.
+Then you can just go ahead with this, play around with these values.
+I'm not going to be explaining them all right now.
+You can watch the video if you want to.
+I'll be linking that into the description.
+So, for now, I'm going to be just going with some basic settings to, you know,
+create sort of like a vertex jitter option, like effect and other things.
+And for the tiling, that will stop.
+Now, one thing on the original video that was set was to use fog.
+But if you try using fog with this shader, you'd realize that there is no fog.
+I mean, why isn't there any fog?
+Well, the thing is, the shader that you're currently using does not support fog.
+The PBR1 does, and this is a very crucial detail that you might miss
+while using this shader onto your project.
+The fix is pretty easy, though.
+Just go into the shader and, instead, select the PBR1.
+And now you'd realize your project looks like shit.
+But don't worry about it.
+We're going to be fixing it.
+Don't mess around with the settings too much.
+Let's keep this lid.
+And I'm going to also make it use specular light as well.
+But I'm going to also keep it a little, you know, other settings.
+I'm going to keep it a little.
+Now, to fix the red glow, go into the lighting tab on the environmental tab
+and from there to set the environmental reflection to custom.
+And also set the environment lighting to skybox, from skybox to color,
+which we'll be doing further up ahead.
+And then you can see your fog is working now.
+You can just go ahead and play around with the settings
+and just select something that fits with your environment and something.
+I went with something like this.
+So you can just go ahead and do that.
+For me, I think this looks fine.
+It looks originally, you know, it looks faithful to the original video as well.
+Return off the fog to work around with the other things.
+Now, the second part is the environmental details.
+And while making a game like this, just for my game,
+or this seems in specific, the very basic or the very main thing are the trees.
+Now, using the same shader that we used for the terrain,
+or the every other thing that we're going to be doing in the game,
+you'd realize that the shader doesn't actually have support for transparent materials.
+Or maybe it does, and I'm too stupid to realize that.
+But in my opinion, or as far as I know,
+the shader doesn't actually have, you know, like alpha clipping or something like that,
+which makes it really difficult for it to use, you know,
+for it to be used on something like tree leaves or something like that.
+So to work my way around this problem,
+I had to be a little bit creative with the leaf textures.
+So rather than, you know, instead using the shader,
+I instead used an only shader that is provided by the URP itself,
+which had the alpha clipping and had a similar result,
+except for not having the vertex shader option or something like that.
+I also went ahead and, you know, changed the leaf textures manually to point no filters,
+since we're not using the shader anymore.
+And with the fog enabled, this sort of looks fine.
+And, you know, since we're using an only shader,
+we can also change the leaf colors as we want them.
+Now, another crucial detail that the original video did not cover
+was how to place the trees onto the terrain.
+And I feel like any other normal person
+would directly start using the terrain system to plant the trees.
+But you'd realize that something is wrong.
+There is an ugly black thing all around the trees, each time you place one.
+And trust me, I've just gone to so much trying to fix this issue.
+And I have no idea why this happens.
+I've changed the specular light.
+I've changed the shader type.
+But in my opinion, just nothing works.
+And it just looks ugly as hell.
+I did get it to work once, but the trees look very weird.
+So, I opt for a new fix for this, you know, weird looking problem.
+I went with Go Painter.
+It basically is the same, but it's a prefab painter.
+And it allows you to paint prefabs onto any surfaces or terrain or anything.
+I also implemented a mini first person controller,
+just to see how the game would look from a player's perspective.
+And it's a very important thing, because you don't want your game to look completely weird
+when you, you know, switch to a player's perspective.
+Yeah, so I would recommend you setting up a mini first person controller
+walking around your scene a bit, just to, you know, see how the scene looks.
+So, yeah, we're in Unity right now.
+And I implemented the, I set it up the first person controller.
+So, this is what it looks like.
+My computer is too shitty to record using the OBS.
+So, you can be idea.
+It just looks fine, I guess.
+So, yeah, let's work on the environment.
+I set it up Go Painter and started placing trees randomly.
+Go Painter has a very handy option to, you know, sort of like randomize trees and stuff.
+And using it is very simple.
+I will not be going into details, because there's dedicated tutorial on their YouTube page.
+You can just go ahead and search for it, or you can also find it on the acid page.
+There's a video over there as well.
+So, I'm going to be leaving the Go Painter link in the description.
+It's a very, very handy tool.
+It has a lot of, like, you know, customization functionalities.
+It has, you know, a lot of randomization options and stuff.
+So, yeah, I definitely would recommend you using something like Go Painter or something.
+And I would not recommend you using the Unity terrain systems,
+tree placement, because it's very messed up.
+And I don't know why it just doesn't work with the shader at all.
+Once you have a rough design, go ahead and play it again.
+Just see how the game turns, you know, turned out and things that you might want to change about your game.
+So, another thing is that the environment, like I said, it really matters.
+So, for now, you can see that trees don't really match up with the environment that I'm, you know, working with.
+So, we're going to be changing that just in a bit.
+Also, a quick little tip.
+Go ahead and turn on GPU Instancing for every single material that you have.
+This will make your game run a lot, a lot smoother trust me.
+If you have too many objects in the scene, GPU Instancing is your best friend.
+Trust me, it literally makes a huge impact on the performance.
+Now, to make the trees look like as if they belong to the environment.
+You can go ahead and, you know, play with the color position setting,
+just to, you know, make things a little bit darker or, you know,
+just do add a little bit more color position as the PlayStation 1.
+So, I will not be adding it too much.
+I will leave it to 8 by default on, you know, each one of the materials of tree bark and tree trunks.
+But for the leaves, the leaves are pretty interesting.
+Since I use the Unlit shader that is provided by the Universe by pipeline,
+I have an option to, sort of, you know, tweak the colors of the leaf material.
+So, as you can see, if I were to go into this tree, that's really nearby and switch it.
+So, as you can see, I can actually change the leaf color.
+And then, like, base color, I can actually implement and sort of add a extra color
+on top of the original preexisting texture, which makes the trees look
+as if they belong to the environment.
+So, since I'm working with a sunset type of scene,
+so I think changing my tree's leaf colors leaves color
+to something like dark maroon or maybe a little bit red or a little bit black dark type of color
+would really suit or, like, you know, really complement the scene overall nicely.
+After tweaking around a little bit, I got something that I'm really happy with.
+So, I'm just going to keep these settings.
+Okay, it's time for post-processing.
+While making a PS1 games, a lot of post-processing options are not available for us.
+We can't use fancy effects such as entailessing or bloom or even ambient occlusion.
+So, the things that we're going to be doing with post-processing is just to enhance the way the overall scene looks.
+So, for me, I have selected the sunset scene.
+So, for this one, we're going to be using a lot of color adjustments and a lot of shadows and mittones
+and a lot of lift gamma grain to make, you know, adjustments to the scene
+and make it as appear that the entire scene is sort of red and stuff.
+So, basically, we're going to be doing a lot of color adjustments with the post-processing effects.
+Go ahead and create a global volume and just start adding the effects and just color adjustments and lift gamma grain and, you know, stuff like that.
+So, for me, I'm going to be, you know, using a new post-processing volume.
+And I'm just going to show you what happens if you were to use a lot of bloom and other things.
+Also, make sure to, you know, use check post-processing underneath your PS1 character controller
+and make sure there is no entailessing, like the entailessing is set to none.
+You can also use death ring from here, but I never found any actual use of this thing.
+So, I'm just going to turn this off, anyway.
+Using effects such as bloom and tone mapping usually results in your game not looking retro at all.
+So, we're just going to be using, you know, color adjustments and stuff.
+Also, I should mention, there's a custom renderer feature in this shader, which is the pixelation effect
+that allows you to determine the amount of pixels available on the screen.
+To use this, add the pixelation effect as a post-processing setting
+and then go into your settings and forward renderer and add a new renderer feature and just add the pixelation system.
+So, from here, you should see a little bit of change on your screen.
+So, yeah, go ahead and onto your global volume once you've added this to your forward renderer.
+And from here, you can actually, you know, play around with the color position values
+and the height and width of your screen.
+But I would recommend you not using the height and width
+and just leaving the resolution default to, you know, 720p or something like that.
+Or maybe 1080p, doesn't really matter.
+I wouldn't really recommend you going with a, you know, 2x9 aspect ratio or something like that.
+So, you know, the original PS1 look, because some things are purely aesthetic based
+and we don't want our eyes to hurt, so I would just recommend you doing that.
+If you were to use the original PS1 resolution in this case, things will not look that good.
+Things suggest that are way too far away with loads of details
+and the entire screen would just look like a pixelated blurry mess.
+So, I would recommend you not using the height and width at all and just turn them off
+and let the shader do its magic.
+It will add a slight amount of pixelation, which is just what we want.
+Okay, now the actual pros for us and stuff.
+Add a shadows, height, light and midtones and start, you know, playing on with the values.
+For in this case, I want the scene to look a little bit more orange-ish and stuff,
+so I'm going to add those things in.
+You can also use a lift gamma-green to, you know, sort of, you know, change the way the scene looks as well.
+I'm going to set this sliders to somewhat red or an orange color to, you know,
+sort of perfectly blend between the fog and the scene and the sky box and other things.
+So, yeah, it's completely aesthetic based and if you want to do it, it's up to you.
+If you don't, that's also up to you.
+But for me, I think the end results look very nice.
+So, yeah, let me just show you the things that I did.
+So, once the environmental stuff was done, now it's time to add these smaller details,
+such as the cabins and other environmental things.
+I used this cabin asset that I got from H.io and then I extracted its material from the prefab
+and now it's time to assign these materials to the shader and then we assign them back to the cabin itself.
+This can be pretty tedious considering the fact that each time you assign the any material to the shader,
+it kind of, you know, takes away the texture, so you have to re-assign the texture.
+But once you do that, you just, you know, just go through it anyway.
+And once you're done with it, you also need to watch out for these weird issues.
+You might turn on this regular option, you know, camera clipping option
+and just turn off the lift functionality completely.
+You also want to add the vertex tutoring, which, by the way, I'm not going to be explaining,
+but it's just a type of tutoring that happens depending on your camera view,
+which used to happen because the PS1 had a very weird texture mapping issue
+due to the limited amount of resources it had.
+Here's a quick way of adding lights.
+Since we're making a PS1 game, making it physical light is really not practical.
+So instead, model a cone like this and assigning sort of fading gradient material to it.
+Bring it into Unity and for the material, all you want to do is to create a new,
+unlit material, assign it to the light cone and then turn on the transparency option.
+This is the great way to add fake, volumetric PS1 looking lights.
+So what you can do is add in a car or something like this that I have added in the scene.
+And then assign that, you know, light thing and just, you know, place it onto the car's headlight
+to give it that, you know, cool looking PS1 light thing.
+Effect or something like that?
+I don't know.
+Shoot eventually looks something like this.
+Looks pretty cool.
+So yeah, another small, you know, tip is to go into the lighting and the environment section
+and make sure to set up the environment lighting to color instead of skyballs.
+This will, you know, pick some weird lighting issues and, you know, turn on the fog and other things.
+So yeah, I'm pretty happy with how the scene turned out.
+A lot more can be done with this scene.
+A lot of other improvements and adjustments can be done, but that's completely up to you now.
+I'm not going to be making the video any bigger than this because the bigger the video is, people tend to not watch the video at all.
+So yeah, like you said, go ahead and watch the original video and then come back to this video or something.
+This video is like for the bare bone, you know, just the basics and the advanced stuff for beginners.
+So yeah, thanks for watching and don't forget like and subscribe or something like that.
+You can also check out my Patreon.
+It's $2 a month or something like that.
+You get access to all my files and, you know, early alerts and stuff.
+If you want to support the channel, please go ahead and check my Patreon page out or maybe even just put a subscribe to the channel.
+So yeah, thanks for watching. See you later.

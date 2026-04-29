@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "video-synth-input",
+  "title": "Video Research Synthesizer Input",
+  "type": "object",
+  "required": ["research_topic", "keyword_list", "sources", "max_videos"],
+  "properties": {
+    "research_topic": {
+      "type": "string",
+      "description": "Core research question for video search, e.g. 'Y2K dark cyan liminal space game art'"
+    },
+    "keyword_list": {
+      "type": "array",
+      "description": "5–10 search keywords derived from art review findings",
+      "minItems": 5,
+      "maxItems": 10,
+      "items": { "type": "string" }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Video platforms to search",
+      "items": { "type": "string", "enum": ["youtube", "bilibili"] },
+      "minItems": 1
+    },
+    "max_videos": {
+      "type": "integer",
+      "description": "Maximum total videos to fetch across all keywords",
+      "default": 15,
+      "minimum": 5,
+      "maximum": 30
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json", "both"],
+      "default": "markdown"
+    },
+    "model_size": {
+      "type": "string",
+      "enum": ["tiny", "base", "small", "medium", "large"],
+      "default": "base",
+      "description": "Whisper model size for transcription"
+    },
+    "language": {
+      "type": "string",
+      "default": "zh",
+      "description": "Primary language of videos (zh, en, auto)"
+    },
+    "keep_video_files": {
+      "type": "boolean",
+      "default": false,
+      "description": "If false, deletes video after script extraction"
+    },
+    "game_context": {
+      "type": "object",
+      "description": "Optional context from Phase A/B to focus the research",
+      "properties": {
+        "art_review_report_path": { "type": "string" },
+        "game_test_report_path": { "type": "string" },
+        "identified_weaknesses": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

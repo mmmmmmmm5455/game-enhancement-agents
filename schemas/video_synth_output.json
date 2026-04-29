@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "video-synth-output",
+  "title": "Video Research Synthesizer Output",
+  "type": "object",
+  "required": [
+    "report_path",
+    "total_videos_analyzed",
+    "total_script_words",
+    "key_findings",
+    "comparative_analysis",
+    "actionable_insights_for_game"
+  ],
+  "properties": {
+    "report_path": {
+      "type": "string",
+      "description": "Absolute path to the generated research report (Markdown)"
+    },
+    "script_bundle_path": {
+      "type": "string",
+      "description": "Path to the merged raw scripts file (all video transcripts concatenated)"
+    },
+    "total_videos_analyzed": { "type": "integer", "minimum": 0 },
+    "total_script_words": { "type": "integer", "minimum": 0 },
+    "videos_processed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "title", "url", "duration_seconds", "word_count", "language", "relevance_score"],
+        "properties": {
+          "source": { "type": "string", "enum": ["youtube", "bilibili"] },
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "duration_seconds": { "type": "integer" },
+          "word_count": { "type": "integer" },
+          "language": { "type": "string" },
+          "relevance_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "script_path": { "type": "string", "description": "Path to extracted script .txt" }
+        }
+      }
+    },
+    "key_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["theme", "frequency", "source_videos", "summary", "confidence"],
+        "properties": {
+          "theme": { "type": "string" },
+          "frequency": { "type": "integer", "description": "How many videos mentioned this theme" },
+          "source_videos": { "type": "array", "items": { "type": "string" } },
+          "summary": { "type": "string", "description": "1-2 sentence synthesis of what videos say about this theme" },
+          "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+          "direct_quotes": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "comparative_analysis": {
+      "type": "object",
+      "required": ["cross_reference_matrix", "consensus_findings", "contradictions", "unique_insights"],
+      "properties": {
+        "cross_reference_matrix": {
+          "type": "string",
+          "description": "Markdown table cross-referencing themes × source videos"
+        },
+        "consensus_findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding", "agreeing_videos", "strength"],
+            "properties": {
+              "finding": { "type": "string" },
+              "agreeing_videos": { "type": "integer" },
+              "strength": { "type": "string", "enum": ["strong_consensus", "moderate_consensus", "weak_consensus"] }
+            }
+          }
+        },
+        "contradictions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["topic", "position_a", "position_b", "videos_a", "videos_b"],
+            "properties": {
+              "topic": { "type": "string" },
+              "position_a": { "type": "string" },
+              "position_b": { "type": "string" },
+              "videos_a": { "type": "array", "items": { "type": "string" } },
+              "videos_b": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "unique_insights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["insight", "source_video", "applicability"],
+            "properties": {
+              "insight": { "type": "string" },
+              "source_video": { "type": "string" },
+              "applicability": { "type": "string", "enum": ["directly_applicable", "needs_adaptation", "inspirational"] }
+            }
+          }
+        }
+      }
+    },
+    "actionable_insights_for_game": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "insight", "implementation_difficulty", "estimated_impact", "prd_section"],
+        "properties": {
+          "category": { "type": "string", "enum": ["art", "ui", "narrative", "audio", "performance", "atmosphere"] },
+          "insight": { "type": "string" },
+          "implementation_difficulty": { "type": "string", "enum": ["easy", "moderate", "hard", "research_required"] },
+          "estimated_impact": { "type": "string", "enum": ["low", "medium", "high", "transformative"] },
+          "prd_section": { "type": "string", "description": "Which section of the enhancement PRD this feeds into" },
+          "source_videos": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["keyword", "error_type", "message"],
+        "properties": {
+          "keyword": { "type": "string" },
+          "error_type": { "type": "string", "enum": ["no_results", "download_failed", "transcription_failed", "relevance_filtered"] },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

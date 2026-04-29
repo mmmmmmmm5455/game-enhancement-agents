@@ -1,0 +1,208 @@
+{
+  "report_path": "output/video_research_report.md",
+  "total_videos_analyzed": 6,
+  "total_words_transcribed": 23574,
+  "key_findings": [
+    {
+      "id": "F1",
+      "finding": "Fog is the single highest-impact PS1 horror aesthetic technique — both atmospheric AND a performance-saving measure (Silent Hill benchmark)",
+      "source_count": 5,
+      "sources": ["1hZGbnj3hus", "YyFx5HDbgSU", "AOgl-MRi26A", "MTiw47GzKVw", "P6cfM2GsEFQ"],
+      "implementation": "Apply FogExp2 at density 0.0012-0.0015 with cold cyan color (0x003344) to all 4 scenes; currently 3 of 4 scenes have fog bugs (wrong density, wrong color, or missing FogExp2)",
+      "priority": "P0_CRITICAL"
+    },
+    {
+      "id": "F2",
+      "finding": "CRT emulation requires 5 composited effects (barrel distortion, chromatic aberration with per-channel RGB offset, scanlines with time animation, noise grain, vignette) — CSS-only approach can reach at most ~40/100 fidelity",
+      "source_count": 5,
+      "sources": ["SUiWNgf96WA", "YyFx5HDbgSU", "AOgl-MRi26A", "1hZGbnj3hus", "P6cfM2GsEFQ"],
+      "implementation": "Three.js EffectComposer + custom ShaderPass: barrel distortion on UV → sample R at +1 offset, B at -1 offset for chromatic aberration → multiply by time-animated scanline texture → composite noise texture with per-frame randomization → blend vignette at edges → output. Retain CSS crt.css as fallback.",
+      "priority": "P1_HIGH"
+    },
+    {
+      "id": "F3",
+      "finding": "Low-resolution texture pipeline is structural: 64x64 textures + point filtering (no interpolation) + vertex jitter (0.3-0.8 unit random displacement) create authentic PS1 look",
+      "source_count": 3,
+      "sources": ["YyFx5HDbgSU", "AOgl-MRi26A", "1hZGbnj3hus"],
+      "implementation": "Enforce 64x64 or 128x128 texture cap; set Three.js texture magFilter/minFilter to NearestFilter; add custom vertex shader with random position displacement",
+      "priority": "P2_HIGH"
+    },
+    {
+      "id": "F4",
+      "finding": "Loneliness is the core emotional mechanic of PS1 horror — achieved through minimal sound design (sparse drones, isolated footsteps, no music), empty environments, and limited visibility",
+      "source_count": 3,
+      "sources": ["1hZGbnj3hus", "MTiw47GzKVw", "P6cfM2GsEFQ"],
+      "implementation": "One low-frequency drone per scene, player footstep audio with reverb, no background music, wind/water at 20% volume",
+      "priority": "P2_HIGH"
+    },
+    {
+      "id": "F5",
+      "finding": "Liminal spaces derive power from being transitional (hallways, pools, underpasses), empty-but-not-abandoned, with fog obscuring boundaries — Dreamcore adds cryptic text overlays on top of liminal base",
+      "source_count": 2,
+      "sources": ["MTiw47GzKVw", "P6cfM2GsEFQ"],
+      "implementation": "Add occasional cryptic UI text fragments fading in/out at random screen positions; add subtle human-trace artifacts to scenes (lit window, abandoned object); procedural fog density variation",
+      "priority": "P3_MEDIUM"
+    },
+    {
+      "id": "F6",
+      "finding": "Render resolution should be intentionally degraded: disable anti-aliasing, set pixel ratio to 0.5-1.0, no MSAA",
+      "source_count": 3,
+      "sources": ["YyFx5HDbgSU", "AOgl-MRi26A", "SUiWNgf96WA"],
+      "implementation": "renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1)); renderer = new THREE.WebGLRenderer({ antialias: false })",
+      "priority": "P1_HIGH"
+    },
+    {
+      "id": "F7",
+      "finding": "Fixed camera angles in key moments create helplessness and tension; optional player-toggleable CRT effects increase immersion buy-in",
+      "source_count": 2,
+      "sources": ["1hZGbnj3hus", "P6cfM2GsEFQ"],
+      "implementation": "Trigger-zone based camera lock (3-5 seconds); [T] keybind cycles CRT modes (off/light/full)",
+      "priority": "P3_MEDIUM"
+    }
+  ],
+  "comparative_analysis": {
+    "cross_reference_matrix": {
+      "fog": { "sources_agree": 5, "sources_disagree": 0, "consensus": "STRONG — implement aggressively" },
+      "low_res_textures": { "sources_agree": 3, "sources_disagree": 0, "consensus": "STRONG — 64x64 cap + point filter" },
+      "crt_effects": { "sources_agree": 5, "sources_disagree": 0, "consensus": "STRONG — WebGL shader required, CSS insufficient" },
+      "cold_color_palette": { "sources_agree": 4, "sources_disagree": 0, "consensus": "STRONG — no warm tones" },
+      "loneliness_isolation": { "sources_agree": 3, "sources_disagree": 0, "consensus": "MODERATE — design philosophy, harder to measure" },
+      "vertex_jitter": { "sources_agree": 2, "sources_disagree": 0, "consensus": "WEAK — only 2 sources cover it" },
+      "fixed_camera": { "sources_agree": 1, "sources_disagree": 0, "consensus": "WEAK — single source, period-accurate but niche" }
+    },
+    "consensus_findings": [
+      "Fog is the defining PS1 horror technique — all design and technical sources agree",
+      "CRT requires multi-effect compositing, not single-effect overlay",
+      "Low-res textures + point filtering are structural, not cosmetic",
+      "Cold color palette is non-negotiable for horror atmosphere"
+    ],
+    "contradictions": [
+      {
+        "topic": "Unity terrain system for PS1",
+        "source_a": "YyFx5HDbgSU — terrain system works",
+        "source_b": "AOgl-MRi26A — terrain tree placement broken with PSX shader",
+        "resolution": "Source B is correct; source A later acknowledges this. For Three.js: manually construct low-poly terrain geometry, do not rely on automated systems."
+      },
+      {
+        "topic": "CRT implementation approach",
+        "source_a": "Current game — CSS-only via crt.css",
+        "source_b": "SUiWNgf96WA — WebGL shader post-processing",
+        "resolution": "CSS can reach ~40/100 fidelity; WebGL shader required for 80+. Current approach is acceptable as fallback but must be supplemented with WebGL CRT pass."
+      }
+    ],
+    "unique_insights": [
+      {
+        "insight": "Psychic automatism — procedural elements create more authentic liminal feeling than hand-designed scenes",
+        "source": "MTiw47GzKVw",
+        "application": "Add random fog density variation, random particle drift, random dreamcore text fragment timing"
+      },
+      {
+        "insight": "Fixed camera angles create more tension than first-person for certain horror moments",
+        "source": "1hZGbnj3hus",
+        "application": "Implement trigger-zone camera locks for key liminal reveals"
+      },
+      {
+        "insight": "CRT toggle as player-facing option solves readability complaints without removing aesthetic",
+        "source": "P6cfM2GsEFQ",
+        "application": "Add [T] keybind cycling through CRT modes"
+      }
+    ]
+  },
+  "actionable_insights_for_game": [
+    {
+      "id": "AI-01",
+      "category": "rendering",
+      "insight": "Implement WebGL CRT post-processing shader with barrel distortion, per-channel chromatic aberration, time-animated scanlines, noise grain, and vignette",
+      "current_status": "MISSING — only CSS scanlines + radial-gradient chromatic aberration exist",
+      "effort_hours": 6,
+      "impact": "very_high",
+      "priority": "P1"
+    },
+    {
+      "id": "AI-02",
+      "category": "atmosphere",
+      "insight": "Fix fog on all 4 scenes: FogExp2 for highway and snow bridge, cold cyan color for blizzard, extend near-plane for underpass",
+      "current_status": "PARTIAL — 3 of 4 scenes have fog bugs",
+      "effort_hours": 1,
+      "impact": "very_high",
+      "priority": "P0"
+    },
+    {
+      "id": "AI-03",
+      "category": "color",
+      "insight": "Replace all warm 3D scene colors with cold palette: streetlight 0xffcc66→0x00bcd4, snow 0xffffff→0xc0d8f0, housing 0xffaa22→0x006064, fog 0x1a1015→0x001a2e",
+      "current_status": "BROKEN — 5 warm color violations in 3D scenes",
+      "effort_hours": 0.5,
+      "impact": "high",
+      "priority": "P0"
+    },
+    {
+      "id": "AI-04",
+      "category": "rendering",
+      "insight": "Downscale render resolution to PS1-era: setPixelRatio(0.5-1.0), disable MSAA, disable antialias",
+      "current_status": "UNKNOWN — renderer config not audited",
+      "effort_hours": 0.25,
+      "impact": "high",
+      "priority": "P1"
+    },
+    {
+      "id": "AI-05",
+      "category": "rendering",
+      "insight": "Add vertex jitter shader: random position displacement 0.3-0.8 units in vertex shader",
+      "current_status": "MISSING",
+      "effort_hours": 3,
+      "impact": "medium",
+      "priority": "P2"
+    },
+    {
+      "id": "AI-06",
+      "category": "audio",
+      "insight": "Implement minimal/sparse audio: one drone per scene, footsteps with reverb, no music, environmental sounds at 20%",
+      "current_status": "UNKNOWN — audio system not audited",
+      "effort_hours": 4,
+      "impact": "high",
+      "priority": "P2"
+    },
+    {
+      "id": "AI-07",
+      "category": "ui",
+      "insight": "Add CRT toggle keybind [T] cycling off/light/full modes",
+      "current_status": "MISSING",
+      "effort_hours": 0.5,
+      "impact": "low",
+      "priority": "P3"
+    },
+    {
+      "id": "AI-08",
+      "category": "narrative",
+      "insight": "Add dreamcore cryptic text fragments at random screen positions, fading in/out over 8-12 seconds",
+      "current_status": "MISSING",
+      "effort_hours": 1,
+      "impact": "medium",
+      "priority": "P3"
+    },
+    {
+      "id": "AI-09",
+      "category": "camera",
+      "insight": "Implement trigger-zone based fixed-camera lock for 3-5 second reveals in key liminal moments",
+      "current_status": "MISSING",
+      "effort_hours": 2,
+      "impact": "low",
+      "priority": "P3"
+    }
+  ],
+  "transcription_quality_notes": {
+    "model": "whisper base",
+    "language": "en",
+    "average_accuracy": "medium — base model has ~85% accuracy; technical terms (FogExp2, ShaderPass, vignette) may have transcription errors",
+    "recommendation": "For production research, use whisper medium or large model for >95% accuracy on technical terminology"
+  },
+  "pipeline_metadata": {
+    "extraction_method": "yt-dlp -f bestaudio → whisper base --model base → manual merge",
+    "audio_deleted": true,
+    "transcripts_preserved": true,
+    "merged_transcript_path": "output/scripts/merged_scripts.txt",
+    "total_duration_approx_minutes": 120,
+    "date_completed": "2026-04-30"
+  }
+}

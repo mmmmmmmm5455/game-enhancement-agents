@@ -1,0 +1,303 @@
+{
+  "overall_score": 57,
+  "color_analysis": {
+    "palette_compliance": {
+      "score": 52,
+      "violations": [
+        {
+          "selector": ":root --color-sick-green",
+          "file": "frontend/css/main.css",
+          "line": 22,
+          "actual_color": "#33FF33",
+          "expected_color": "#00ff41",
+          "severity": "high"
+        },
+        {
+          "selector": ":root --color-dark-brown",
+          "file": "frontend/css/main.css",
+          "line": 24,
+          "actual_color": "#8B4513",
+          "expected_color": "#ffab00",
+          "severity": "critical"
+        },
+        {
+          "selector": ":root --color-text-primary",
+          "file": "frontend/css/main.css",
+          "line": 28,
+          "actual_color": "#C0C0C0",
+          "expected_color": "#b0bec5",
+          "severity": "low"
+        },
+        {
+          "selector": ":root --color-taillight-red",
+          "file": "frontend/css/main.css",
+          "line": 27,
+          "actual_color": "#8B0000",
+          "expected_color": "#ff1744",
+          "severity": "medium"
+        },
+        {
+          "selector": "scene: snow_bridge - snow particles",
+          "file": "frontend/js/scenes/snow_bridge.js",
+          "line": 67,
+          "actual_color": "0xffffff",
+          "expected_color": "0xc0d8f0",
+          "severity": "medium"
+        },
+        {
+          "selector": "scene: snow_bridge - streetlight",
+          "file": "frontend/js/scenes/snow_bridge.js",
+          "line": 19,
+          "actual_color": "0xffcc66 / 0xffaa22",
+          "expected_color": "0x00e5ff (cold cyan emission)",
+          "severity": "high"
+        },
+        {
+          "selector": "scene: snow_bridge - housing emissive",
+          "file": "frontend/js/scenes/snow_bridge.js",
+          "line": 31,
+          "actual_color": "emissive: 0xffaa22",
+          "expected_color": "emissive: 0x006064",
+          "severity": "high"
+        },
+        {
+          "selector": "scene: blizzard_street - emergency light",
+          "file": "frontend/js/scenes/blizzard_street.js",
+          "line": 17,
+          "actual_color": "0xcc2233",
+          "expected_color": "0xff1744",
+          "severity": "low"
+        },
+        {
+          "selector": "scene: blizzard_street - alarm box emissive",
+          "file": "frontend/js/scenes/blizzard_street.js",
+          "line": 48,
+          "actual_color": "emissive: 0x440000",
+          "expected_color": "emissive: 0x1a0000",
+          "severity": "medium"
+        },
+        {
+          "selector": ":root --color-cold-cyan",
+          "file": "frontend/css/main.css",
+          "line": 25,
+          "actual_color": "#88CCFF",
+          "expected_color": "#00e5ff",
+          "severity": "medium"
+        },
+        {
+          "selector": "#fragment-counter",
+          "file": "frontend/css/counters.css",
+          "line": 14,
+          "actual_color": "var(--color-dark-brown) [#8B4513]",
+          "expected_color": "#ffab00",
+          "severity": "critical"
+        }
+      ],
+      "evidence": "grep -nE 'color:|#[0-9a-fA-F]{6}|0x[0-9a-fA-F]{6}' frontend/css/*.css frontend/js/scenes/*.js"
+    },
+    "warmth_check": {
+      "score": 45,
+      "dominant_temperature": "warm",
+      "issues": [
+        "Snow Bridge scene: streetlight 0xffcc66 is ~5500K warm yellow - Y2K dark-cyan requires cool (<5000K) illumination",
+        "Brown #8B4513 used for fragment counter and as CSS variable - warm earth tone violates cold palette rule",
+        "Blizzard Street: dark red/purple palette (0xcc2233 emergency, 0x1a1015 fog) creates warm red undertone instead of cold cyan"
+      ]
+    },
+    "crt_authenticity": {
+      "score": 25,
+      "scanlines_present": true,
+      "bloom_present": false,
+      "chromatic_aberration_present": false,
+      "noise_present": false,
+      "vignette_present": false,
+      "scanlines_issue": "opacity: 0.4 is 3x-8x too high (Y2K spec: 0.05-0.15)",
+      "evidence": "grep -nE 'filter|backdrop-filter|::after|scanline|bloom|chromatic|noise|vignette|radial-gradient' frontend/css/crt.css frontend/css/main.css"
+    }
+  },
+  "typography_analysis": {
+    "score": 82,
+    "font_family_issues": [],
+    "size_issues": [
+      "counters.css line 6: #emotion-bar, #infection-bar font-size: 11px - borderline, should be >= 12px",
+      "panels.css line 21: #bottom-bar font-size: 12px - acceptable minimum"
+    ],
+    "anti_aliasing_issues": [],
+    "strengths": [
+      "4 Y2K-compliant font families loaded: VT323 (pixel), Silkscreen (pixel), Share Tech Mono (monospace), Orbitron (tech display)",
+      "image-rendering: pixelated set globally on body element",
+      "Custom SevenSegment font-face for counter displays",
+      "System font stack fallback is monospace",
+      "-webkit-font-smoothing: none (CRT-correct, no anti-aliasing)"
+    ]
+  },
+  "layout_analysis": {
+    "score": 65,
+    "asymmetry_score": 30,
+    "hierarchy_issues": [
+      "Mac OS 9 / QuickTime window panel metaphor is period-correct for Y2K",
+      "Layout is centered symmetrical (dialog-panel centered, input-panel centered) - Y2K liminal benefits from mild asymmetry",
+      "No brutalist offset elements - all panels aligned to center axis"
+    ],
+    "negative_space_score": 75,
+    "strengths": [
+      "Large Three.js background fills entire viewport creating negative space",
+      "Dialog panel at 50% height leaves breathing room above and below",
+      "System dialog and popup use distinct z-layers creating depth"
+    ]
+  },
+  "scene_atmosphere_analysis": {
+    "liminal_quality_score": 68,
+    "fog_present": true,
+    "lighting_issues": [
+      "Rain Underpass: fog near 20-80 too close for deep liminal effect",
+      "Snow Bridge: no volumetric fog, black fog (0x000000) reduces depth",
+      "Fog Highway: FogExp2 density 0.0006 too light - distant objects still visible",
+      "Blizzard Street: fog (0x1a1015) has warm purple tint instead of cold cyan"
+    ],
+    "per_scene_notes": [
+      {
+        "scene": "rain_underpass",
+        "atmosphere_score": 72,
+        "notes": "Strongest liminal scene. Fog present, cool ambient, single distant warm window creates isolation. Rain particles (600 drops, additive blending) add atmosphere. Cracked concrete floor with flat shading reinforces PS1 aesthetic."
+      },
+      {
+        "scene": "snow_bridge",
+        "atmosphere_score": 55,
+        "notes": "70% dead black requirement is atmospheric but warm streetlight breaks cold palette. Snow particles at 0xffffff are too bright - should use pale cyan. Streetlight flicker effect adds unease. Missing fog depth reduces liminal quality."
+      },
+      {
+        "scene": "fog_highway",
+        "atmosphere_score": 78,
+        "notes": "Best technical implementation. FogExp2 creates continuous depth falloff. Dashed center lines at 30% opacity fade into fog correctly. Light poles with distance-based opacity reinforce fog depth. Fog particles (300, additive blending) create volumetric atmosphere. Highway light at 0xaaccff is cold cyan - ideal."
+      },
+      {
+        "scene": "blizzard_street",
+        "atmosphere_score": 60,
+        "notes": "Good technical elements: fog present, snow + grain dual particle system (innovative). Film grain overlay via 3D points (200 particles, 0.25 opacity, additive blending) is creative but should be CSS overlay for consistency. Dark red emergency light creates tension but warm red palette conflicts with Y2K dark-cyan."
+      }
+    ]
+  },
+  "improvement_recommendations": [
+    {
+      "priority": 1,
+      "category": "color",
+      "description": "Replace warm brown (#8B4513) with cold amber (#ffab00) in CSS variables and fragment counter",
+      "file": "frontend/css/main.css",
+      "selector_or_line": "lines 24, 27; counters.css line 14",
+      "verification_command": "grep -n '#8B4513' frontend/css/*.css && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 2,
+      "category": "postprocessing",
+      "description": "Reduce CRT scanline opacity from 0.4 to 0.10 (Y2K spec: 0.05-0.15)",
+      "file": "frontend/css/crt.css",
+      "selector_or_line": "line 12",
+      "verification_command": "grep -n 'opacity: 0.4' frontend/css/crt.css && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 3,
+      "category": "postprocessing",
+      "description": "Add chromatic aberration effect (RGB channel separation 1-3px at edges) via CSS filter or WebGL post-pass",
+      "file": "frontend/css/crt.css",
+      "selector_or_line": "new: body::before pseudo-element",
+      "verification_command": "grep -n 'chromatic' frontend/css/crt.css || echo 'FAIL: missing'"
+    },
+    {
+      "priority": 4,
+      "category": "postprocessing",
+      "description": "Add bloom/glow on bright elements (cyan accents, green text) via CSS text-shadow or filter: blur overlay",
+      "file": "frontend/css/main.css",
+      "selector_or_line": "new rule for accent elements",
+      "verification_command": "grep -nE 'text-shadow.*(cyan|00e5ff)|filter.*blur' frontend/css/main.css || echo 'FAIL: missing'"
+    },
+    {
+      "priority": 5,
+      "category": "postprocessing",
+      "description": "Add noise/grain overlay (opacity 0.03-0.06) as CSS pseudo-element with SVG noise texture",
+      "file": "frontend/css/crt.css",
+      "selector_or_line": "new: grain overlay rule",
+      "verification_command": "grep -nE 'noise|grain|feTurbulence' frontend/css/crt.css || echo 'FAIL: missing'"
+    },
+    {
+      "priority": 6,
+      "category": "postprocessing",
+      "description": "Add screen vignette (CSS radial-gradient from transparent to rgba(0,0,0,0.4) at edges)",
+      "file": "frontend/css/crt.css",
+      "selector_or_line": "new: vignette overlay rule",
+      "verification_command": "grep -nE 'radial-gradient|vignette' frontend/css/crt.css || echo 'FAIL: missing'"
+    },
+    {
+      "priority": 7,
+      "category": "color",
+      "description": "Replace pure green (#33FF33) with CRT phosphor green (#00ff41) for sick-green variable",
+      "file": "frontend/css/main.css",
+      "selector_or_line": "line 22",
+      "verification_command": "grep -nE '#33FF33|#33ff33' frontend/css/main.css && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 8,
+      "category": "color",
+      "description": "Change snow particles from pure white (0xffffff) to cold pale cyan (0xc0d8f0) in snow_bridge.js",
+      "file": "frontend/js/scenes/snow_bridge.js",
+      "selector_or_line": "line 67",
+      "verification_command": "grep -n '0xffffff' frontend/js/scenes/snow_bridge.js && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 9,
+      "category": "atmosphere",
+      "description": "Replace warm streetlight (0xffcc66, 5500K) with cold cyan streetlight (0x00bcd4) in snow_bridge.js",
+      "file": "frontend/js/scenes/snow_bridge.js",
+      "selector_or_line": "lines 19, 31",
+      "verification_command": "grep -nE '0xffcc66|0xffcc44|0xffaa22' frontend/js/scenes/snow_bridge.js && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 10,
+      "category": "atmosphere",
+      "description": "Change blizzard street fog from warm purple (0x1a1015) to cold cyan-tinted fog (0x001a2e)",
+      "file": "frontend/js/scenes/blizzard_street.js",
+      "selector_or_line": "line 9",
+      "verification_command": "grep -n '0x1a1015' frontend/js/scenes/blizzard_street.js && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 11,
+      "category": "typography",
+      "description": "Bump minimum font size from 11px to 12px on emotion/infection bar labels",
+      "file": "frontend/css/counters.css",
+      "selector_or_line": "line 6",
+      "verification_command": "grep -n 'font-size: 11px' frontend/css/counters.css && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 12,
+      "category": "atmosphere",
+      "description": "Increase FogExp2 density from 0.0006 to 0.0012 for deeper liminal fade on fog_highway",
+      "file": "frontend/js/scenes/fog_highway.js",
+      "selector_or_line": "line 9",
+      "verification_command": "grep -n 'FogExp2.*0.0006' frontend/js/scenes/fog_highway.js && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 13,
+      "category": "atmosphere",
+      "description": "Add volumetric depth fog to snow_bridge scene (replace flat Fog with FogExp2)",
+      "file": "frontend/js/scenes/snow_bridge.js",
+      "selector_or_line": "line 10",
+      "verification_command": "grep -n 'Fog(0x000000' frontend/js/scenes/snow_bridge.js && echo FAIL || echo PASS"
+    },
+    {
+      "priority": 14,
+      "category": "layout",
+      "description": "Add subtle asymmetric offset to dialog panel for brutalist Y2K feel",
+      "file": "frontend/css/panels.css",
+      "selector_or_line": "line 11",
+      "verification_command": "grep -n 'translate(-50%' frontend/css/panels.css && echo 'FAIL: centered' || echo PASS"
+    },
+    {
+      "priority": 15,
+      "category": "color",
+      "description": "Change cold-cyan variable from #88CCFF to #00e5ff for more saturated CRT cyan",
+      "file": "frontend/css/main.css",
+      "selector_or_line": "line 25",
+      "verification_command": "grep -nE '#88CCFF|#88ccff' frontend/css/main.css && echo FAIL || echo PASS"
+    }
+  ]
+}

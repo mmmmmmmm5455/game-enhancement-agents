@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "art-reviewer-output",
+  "title": "Art Style Reviewer Output",
+  "type": "object",
+  "required": [
+    "overall_score",
+    "color_analysis",
+    "typography_analysis",
+    "layout_analysis",
+    "scene_atmosphere_analysis",
+    "improvement_recommendations"
+  ],
+  "properties": {
+    "overall_score": {
+      "type": "integer",
+      "description": "0–100 composite score of Y2K dark-cyan aesthetic compliance",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "color_analysis": {
+      "type": "object",
+      "required": ["palette_compliance", "warmth_check", "crt_authenticity"],
+      "properties": {
+        "palette_compliance": {
+          "type": "object",
+          "required": ["score", "violations", "evidence"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "violations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["selector", "file", "line", "actual_color", "expected_color", "severity"],
+                "properties": {
+                  "selector": { "type": "string", "description": "CSS selector or element identifier" },
+                  "file": { "type": "string" },
+                  "line": { "type": "integer" },
+                  "actual_color": { "type": "string", "description": "Hex/rgb value found" },
+                  "expected_color": { "type": "string", "description": "Suggested hex/rgb from Y2K palette" },
+                  "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+                }
+              }
+            },
+            "evidence": {
+              "type": "string",
+              "description": "Grep command to reproduce this audit"
+            }
+          }
+        },
+        "warmth_check": {
+          "type": "object",
+          "required": ["score", "dominant_temperature", "issues"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "dominant_temperature": { "type": "string", "enum": ["warm", "cool", "neutral"] },
+            "issues": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "crt_authenticity": {
+          "type": "object",
+          "required": ["score", "scanlines_present", "bloom_present", "chromatic_aberration_present", "noise_present"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "scanlines_present": { "type": "boolean" },
+            "bloom_present": { "type": "boolean" },
+            "chromatic_aberration_present": { "type": "boolean" },
+            "noise_present": { "type": "boolean" },
+            "evidence": { "type": "string", "description": "Grep command to verify CRT effect declarations" }
+          }
+        }
+      }
+    },
+    "typography_analysis": {
+      "type": "object",
+      "required": ["score", "font_family_issues", "size_issues", "anti_aliasing_issues"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "font_family_issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["selector", "file", "line", "actual_font", "suggested_font", "severity"],
+            "properties": {
+              "selector": { "type": "string" },
+              "file": { "type": "string" },
+              "line": { "type": "integer" },
+              "actual_font": { "type": "string" },
+              "suggested_font": { "type": "string" },
+              "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+            }
+          }
+        },
+        "size_issues": { "type": "array", "items": { "type": "string" } },
+        "anti_aliasing_issues": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "layout_analysis": {
+      "type": "object",
+      "required": ["score", "asymmetry_score", "hierarchy_issues", "negative_space_score"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "asymmetry_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "hierarchy_issues": { "type": "array", "items": { "type": "string" } },
+        "negative_space_score": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "scene_atmosphere_analysis": {
+      "type": "object",
+      "required": ["liminal_quality_score", "fog_present", "lighting_issues", "per_scene_notes"],
+      "properties": {
+        "liminal_quality_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "fog_present": { "type": "boolean" },
+        "lighting_issues": { "type": "array", "items": { "type": "string" } },
+        "per_scene_notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scene", "atmosphere_score", "notes"],
+            "properties": {
+              "scene": { "type": "string" },
+              "atmosphere_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "notes": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "improvement_recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["priority", "category", "description", "file", "selector_or_line", "verification_command"],
+        "properties": {
+          "priority": { "type": "integer", "minimum": 1, "maximum": 100 },
+          "category": { "type": "string", "enum": ["color", "typography", "layout", "postprocessing", "atmosphere", "ui"] },
+          "description": { "type": "string" },
+          "file": { "type": "string" },
+          "selector_or_line": { "type": "string", "description": "CSS selector, element ID, or line number" },
+          "verification_command": {
+            "type": "string",
+            "description": "A grep, CSS linter, or playwright command that verifies this fix was applied"
+          }
+        }
+      }
+    }
+  }
+}

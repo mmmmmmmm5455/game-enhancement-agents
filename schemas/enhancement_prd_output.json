@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enhancement-prd-output",
+  "title": "Game Enhancement PRD Output",
+  "type": "object",
+  "required": [
+    "prd_path",
+    "executive_summary",
+    "art_style_analysis",
+    "video_research_insights",
+    "dialogue_narrative_enhancement",
+    "ui_ux_improvements",
+    "performance_optimization",
+    "implementation_roadmap"
+  ],
+  "properties": {
+    "prd_path": {
+      "type": "string",
+      "description": "Absolute path to the final PRD markdown file"
+    },
+    "executive_summary": {
+      "type": "object",
+      "required": ["current_state_score", "target_state_description", "key_improvement_areas", "estimated_effort"],
+      "properties": {
+        "current_state_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "target_state_description": { "type": "string" },
+        "key_improvement_areas": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+        "estimated_effort": { "type": "string", "enum": ["days", "weeks", "months"] }
+      }
+    },
+    "art_style_analysis": {
+      "type": "object",
+      "required": ["baseline_score", "target_score", "priority_fixes", "complete_recommendations"],
+      "properties": {
+        "baseline_score": { "type": "integer" },
+        "target_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "priority_fixes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rank", "change", "file", "verification"],
+            "properties": {
+              "rank": { "type": "integer" },
+              "change": { "type": "string" },
+              "file": { "type": "string" },
+              "verification": { "type": "string" }
+            }
+          }
+        },
+        "complete_recommendations": { "type": "string", "description": "Full markdown section from art reviewer" }
+      }
+    },
+    "video_research_insights": {
+      "type": "object",
+      "required": ["total_sources", "key_themes", "applied_insights"],
+      "properties": {
+        "total_sources": { "type": "integer" },
+        "key_themes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["theme", "consensus_level", "game_applications"],
+            "properties": {
+              "theme": { "type": "string" },
+              "consensus_level": { "type": "string" },
+              "game_applications": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "applied_insights": { "type": "string", "description": "Full markdown section from video synthesizer" }
+      }
+    },
+    "dialogue_narrative_enhancement": {
+      "type": "object",
+      "required": ["current_issues", "suggested_improvements", "sample_rewrites"],
+      "properties": {
+        "current_issues": { "type": "array", "items": { "type": "string" } },
+        "suggested_improvements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scene_id", "issue", "suggestion", "priority"],
+            "properties": {
+              "scene_id": { "type": "string" },
+              "issue": { "type": "string" },
+              "suggestion": { "type": "string" },
+              "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+            }
+          }
+        },
+        "sample_rewrites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scene_id", "original", "rewrite", "rationale"],
+            "properties": {
+              "scene_id": { "type": "string" },
+              "original": { "type": "string" },
+              "rewrite": { "type": "string" },
+              "rationale": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "ui_ux_improvements": {
+      "type": "object",
+      "required": ["current_issues", "wireframe_changes", "accessibility_fixes"],
+      "properties": {
+        "current_issues": { "type": "array", "items": { "type": "string" } },
+        "wireframe_changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["component", "change", "rationale"],
+            "properties": {
+              "component": { "type": "string" },
+              "change": { "type": "string" },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "accessibility_fixes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["issue", "wcag_criterion", "fix"],
+            "properties": {
+              "issue": { "type": "string" },
+              "wcag_criterion": { "type": "string" },
+              "fix": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "performance_optimization": {
+      "type": "object",
+      "required": ["current_bottlenecks", "suggested_optimizations"],
+      "properties": {
+        "current_bottlenecks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["area", "severity", "evidence"],
+            "properties": {
+              "area": { "type": "string" },
+              "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "suggested_optimizations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["area", "technique", "estimated_improvement", "implementation_complexity"],
+            "properties": {
+              "area": { "type": "string" },
+              "technique": { "type": "string" },
+              "estimated_improvement": { "type": "string" },
+              "implementation_complexity": { "type": "string", "enum": ["low", "medium", "high"] }
+            }
+          }
+        }
+      }
+    },
+    "implementation_roadmap": {
+      "type": "object",
+      "required": ["phase_1", "phase_2", "phase_3"],
+      "properties": {
+        "phase_1": {
+          "type": "object",
+          "required": ["name", "duration", "tasks", "acceptance_criteria"],
+          "properties": {
+            "name": { "type": "string", "description": "e.g. 'Critical Color & Typography Fixes'" },
+            "duration": { "type": "string" },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "description", "owner_skill", "verification"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "description": { "type": "string" },
+                  "owner_skill": { "type": "string" },
+                  "verification": { "type": "string", "description": "Machine-checkable verification command" }
+                }
+              }
+            },
+            "acceptance_criteria": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "phase_2": {
+          "type": "object",
+          "required": ["name", "duration", "tasks", "acceptance_criteria"],
+          "properties": {
+            "name": { "type": "string", "description": "e.g. 'Atmosphere & Post-Processing Enhancement'" },
+            "duration": { "type": "string" },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "description", "owner_skill", "verification"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "description": { "type": "string" },
+                  "owner_skill": { "type": "string" },
+                  "verification": { "type": "string" }
+                }
+              }
+            },
+            "acceptance_criteria": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "phase_3": {
+          "type": "object",
+          "required": ["name", "duration", "tasks", "acceptance_criteria"],
+          "properties": {
+            "name": { "type": "string", "description": "e.g. 'Narrative & Polish Integration'" },
+            "duration": { "type": "string" },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "description", "owner_skill", "verification"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "description": { "type": "string" },
+                  "owner_skill": { "type": "string" },
+                  "verification": { "type": "string" }
+                }
+              }
+            },
+            "acceptance_criteria": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

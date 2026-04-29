@@ -1,0 +1,282 @@
+PlayStation 1 has to be one of the most advanced consoles of its time.
+It was capable of rendering fully 3D scenes at a very good speed.
+However, due to PlayStation 1's hardware limitations, the developers who made these games
+had to face various kinds of problems and had to find various creative ways to solve those problems.
+And thanks to those creative measures taken by the developers, we got some very iconic looking games,
+which up to this day are a very unique style of its own.
+And the recent indie devs have picked this very iconic style up and they decided to be
+created on their more hardware. However, creating those similar aesthetics of that PlayStation 1
+due to its hardware limitation on a modern game engine is easier said than done.
+And recently I have been experimenting with some of the PlayStation style effects and some of
+its various texturing and lab modeling and other things in the Unity game engine.
+So I decided to create a new tutorial series. So this tutorial series is going to be divided
+into a few parts and this is the first part of it. And if you're watching it after a few weeks
+of its release, there's probably a second part too. So I would recommend you watch this part and
+then move on to the second part. In this series, I'm going to be explaining some small details
+and some bigger details on how to create a PSX style or PS1 style scene for your game that you're
+working on. So for this tutorial, I'm going to be showing you how you can install and use the PSX
+renderer package for your Unity project. So let's go start it. Make a project that uses the
+standard render pipeline, no URP or no HDRP or anything like that. Just the standard core
+render pipeline that comes with Unity built in. So let's start by installing the package called
+Haunted PS1 renderer. It's a custom scriptable renderer pipeline renderer for Unity.
+Made by this awesome guy. I'll be linking the entire
+I get help in the description. There's installation guide here and you can go ahead and read it,
+but if you don't want to read it, then just go ahead and follow my tutorial. So I'm showing you.
+Okay, so download the entire code or from here or you can just go ahead into the releases.
+Also, you need to make sure you have a GitHub account and creating a GitHub account is very
+simple. Just use your email address. Then scroll down and download this Haunted PS1 zip file.
+Then you need to save this and then open it up using your WinRAR. Now head into the directory of
+your newly created project and you should see this package's folder. Now while keeping the
+window open of your WinRAR of the Haunted PS1 back off and select this calm.haunted PS1 renderer
+file and then just drag and drop it into your package's folder. You have to do it exactly like this.
+And once you're done moving the files, go ahead and normally open a pre-unity project.
+Okay, on the top left corner, if this Haunted PS1 thing shows up, then it means that
+you've successfully installed the package. So go ahead into your player settings, build settings,
+then go into the player settings and underneath this graphics tab, you need to assign this PSX
+renderer thing from here. This should be the only one available there. And then you should see
+that your scene has turned completely gray, but don't worry about it, we're going to be fixing it.
+For these of you who want to create your own renderer asset, then you can just do so from
+doing tm from here and do it here from like this and then also create the
+resources and stuff. And then you can just go ahead and assign this to
+seeing we're into your player build settings. But you really don't need to, you can just use the
+one that's already included into it, but that's just something you can do.
+Okay, so back into the project. Now go ahead and select your materials. Go into the materials
+folder of your project and select every single material that there is. And now we need to change all
+of these materials from the standard shader to the custom PSX shader.
+Okay, that took almost 10 minutes to process. Okay, so now you want to select this PSX
+LED. You can also use the PSX terrain for terrains, but I'm going to just go with PSX LED.
+If my laptop allows me to do so, it's really trash, but it's the idea. So,
+I'm just cut this part anyway. Okay, so once all the materials have been changed to PSX
+shader, now as you can see everything is back to normal. So now one thing that you'd realize that
+the fog of that comes with the Unity built-in does not work. Also, none of the light sources in
+your screen will be working, and there are no post-processing effects anymore. And a few other
+things will not be working, such as occlusion, culling, and other stuff, but I guess if you're
+making a PSX game, you don't really have to use that option anyway, because all the textures and the
+materials are really low-size, it will probably, so we won't be having to worry about the optimizations
+or anything. Okay, so we're all set. Let's go ahead and do the right click here. Hierarchy and
+create a global volume and make sure it's global, and from here you can just start by creating a new
+volume profile from here. Should try to state my life. Like that took quite a while, but anyway,
+for back. So from here you can see there's a new profile, and now you can start adding overrides.
+So first of all, they need to add the first override that's going to be allowing us to apply
+the effects, and that is this quality thing over here. Okay, congratulations. You've finally
+like set up the entire project. So now I'm going to be going through those effects, and I'm going
+to be showing you how you can set it up, so that it doesn't look like a mess. So I've done the same
+processes here, but I've moved on to a different scene. So let me just show you how you can fix this
+entire thing. Add this rate to your volume, and this is where we're going to be fixing this nice thing.
+Turn down this noise intensity thing to completely disable the noise, and you also want to change
+this thing. I am actually, no, you're going to keep it simple. You also want to change this
+barrel distortion thing to zero. It basically fixes those distortance over there, and there are a
+lot more options. There's the vignette and some other options here as well. There's bloom over here.
+I want to turn the bloom completely down to get that darkened movie piercing effect. Then there's
+the scanline sharpening and the image sharpening, which basically does exactly as they say,
+sharpens the image and other sharpens the scanline effects that you're seeing at the screen right now.
+So there's this great mass thing which controls this TV like, you know, get there a type of thing,
+and there's an intensity for it. You can just play on with the values to get something that looks
+just right for you. I'm going to be keeping it to a little low so that it gives me that dark and
+gloomy look to my scene. Okay, now time to add a camera volume. Go ahead, add an override and
+add the camera volume, and this is where we control the resolution thing and also control a few
+other options. So as you can see by changing these two sliders, we can actually control the resolution.
+So I would recommend you keeping this a little high. Actually, I want you to keep it completely
+high because when we turn out the resolution from here, as you can see, due to anti-aliasing,
+pixels get really blurry. So I would not recommend you doing this. I would pretend you're just keeping
+it on a very high resolution, and we're going to be adding the pixelation later down the road
+by a random texture or something like that. So yeah, that's, you know, pretty simple for that.
+So you can just do that, keep the resolution really high, and you know, set up the first resolution
+slider to very high, and then just, you know, put up the second one as well, and that's how you
+basically set up a resolution for this one. So as you can see, if I turn them both down, it kind of
+takes the resolution very down. So from here, I'm going to be setting them both
+by something like the 2000, and yeah, that's very magic for the camera one. So now let's add
+in another override, which is the precision volume. So this is a very interesting override,
+and this is where the main magic of PSX game happens. So this one controls the color precision,
+and also this one controls the redding geometry thing, and also some other options. So the first one
+is the geometry jitter, which is basically known as reddish jittering. So this creates like that
+wobbly effect on the textures. And as you can see from here, here's the geometry thing.
+This is the jittering pushback. We don't want to use that. And from here, here's the color
+precision thing. And by tuning it down, you can create the look of that PSX step. If that's
+something like that, you want to keep it something a little bit down so that it's not fully
+accurate to these textures or you know color. So you're going to keep it something like that,
+and the underneath that option, there's the coma option, which further goes ahead on that same color
+thing. There's a more detailed video form, the two from the creator of this render pipeline,
+which I'll be also linking in the description if you want to watch that. But this is a quick run
+down on a motorcycle option over there. And then there's the affine texture mapping, which
+well does exactly the same. It as the name says, it does the affine texture mapping thing.
+So we can just turn that on for the stretching of the texturing when the camera gets too close.
+Now there's the frame buffer data, which controls the intensity of the jittering on screen,
+and then there's the jitter size that controls the size of the jittering. So this completely depends
+on which resolution you're viewing your game from. So I would recommend setting it
+something like, you know, something a little less for 1080p output, or if you're using like a 2k display
+or 4k output, then it would be completely different for that. So it depends on how your game looks
+or which resolution it's using. So play on with the jittering settings. There's the intensity,
+which is the frame buffer data, and then there's the jitter size, which controls the jittering size,
+that's pretty much it. Now another option, which is the tone map of volume, which well does
+exactly as it says it applies some of the little tone mapping to it, such as contrast and, you know,
+saturation and other things to it. This one's not very like very interesting, and it's very
+basic. So if you see it, you'd understand what it does, but it basically controls some color values
+as well. It's basically like the shorter version of compact post-processing that comes with Unity.
+There's saturation, there's gray scale, and other things, so I'm going to skip this one,
+because it's very simple as self explanatory. So the next one is the compression volume,
+and you don't want to use this because it basically makes your game look like shit,
+so we're not going to be using that. And now we're going to be using the lighting volume. So this
+is interesting, because this one allows you to have lights into your scene, and not only any normal
+light, this actually allows you to emulate the original vertex lighting on meshes and textures
+that the original PSX had. So for example, let me show you, we're going to set the resolution to
+1080p so that the tethering is a little bit clearer over here, as you can see here. So there's
+more tethering around the areas. So now I'm going to go here and create a light. So if you have an
+add that light volume, you will see that none of the lights actually don't work unless you've added
+that light volume to it. Now let me just real quick setup a light here. Now to the global volume,
+and enable this, and as you can see now we have lighting. So this is not just any lighting,
+this light will actually move when you move the light as you can see. This dynamically lights
+or the vertex is accordingly to your vertex geometry, and this emulates the way the original
+lighting on PSX worked. So my PC is really shit, so I can't actually properly show you how it works,
+or like it's not fully smooth, but you'd get the idea when you do it for yourself. So go ahead and
+set up some lights for your scene, and then we're going to be playing around with the value settings.
+Okay now select light volume, and from here as you can see there's a few options here.
+You don't want to touch the final 2.1, this actually controls the vertex lighting thing.
+So you want to keep it at default, and we want to lower it down a little bit.
+Here's the big light intensity. This basically controls the entire scene's areas which are not
+properly eliminated, and controls their intensity. Second one, the third one is not very useful,
+and this one over here is pretty useful. This one actually controls a similar type of thing,
+but it's worth dynamic lights. So for now, as you can see, this is how it works. I really can't
+properly explain. Also another thing, like I said, the actual built-in fog, and none of the built-in
+things that comes with the Unity's, that's where the pipeline will no longer be working,
+because we're using a customer and a pipeline for this thing. So yeah, that's something you
+might want to look out for. Also another thing, you'd realize that the skybox is not also working,
+but there's a skybox volume specifically in the global volume settings, so you can add a skybox
+or a color, or you can use a fog color, or you can use a custom colored tile map thing,
+so we're going to be going to that window. But yeah, that's pretty much for it. So you can go
+ahead and play with these light volume settings, just a light up your scene. So yeah, let's add
+any other volume. This one's going to be the fog volume, and this one's the most interesting one.
+This adds the PSX style fog in your scene. So from here, come down here, enable it, and then set
+this 100 to 0, and then you can just slowly breathe it a little bit. This actually creates this
+fog effect, and then from here, the start one, you can just make sure to assign how from which
+distance the fog is going to be assigned. And this is the diffused thing. And this is the precision
+alpha. This controls the precision alpha thing, like, you know, that the original PSX had,
+that weird janky looking fog, and this is the, and this is the color volume as you can guess,
+it just controls the color of your fog. Just want to keep that at default, something like that.
+There's a lot of options here. Then there's also the fog mode. There's the over, over, and there's
+the additive. I'm going to go with additive, and also going to the default mode to cylindrical,
+and this is subtractive. Don't want to do that. You want to keep this to additive.
+And well, this is basically the fog setting that I'm going for. I will not be going into any
+details. Like I said, if you want more detail, you can just go ahead into the creators website,
+that creators video that I'll be looking into the description. And well, there's the second layer
+of fog that you can add and other things like that, but that's pretty much it. You can just go
+ahead and play with them, and find something that suits you back up. Okay, so now finally,
+we're going to be adding the sky volume, which is this one. Well, this is what you'd expect
+to see the sky volume thing. You can change the deterrent, deterring on the sky. You can also set
+it to a solid background color. You know, also like I said, from here, you can actually set a sky
+box texture for it, like a cube bag or something. So you can do that, or you can just set it
+titled one, which is you can create a manually colored sky box for your scene, like the S&C
+you hear from here. So this is not very interesting. I'm just going to set this to something like
+fog, because using the fog one, because we're trying to create a silencer look on the scene.
+And well, that's pretty much it. Well, that's the end of the entire rundown of
+the processing effect. So you know, you can just tweak the settings and see which
+setup suits you the best from the fog settings, the lighting settings, and precision volumes,
+and other things. And it's important. This last thing I noted purposefully, because it's not very
+useful. This actually allows a few weird animation type of things to your entire screen,
+and you can watch this from the creator's video. I will not be going through this because it's
+not really practical to use them, and I won't be using it at all later. Now you can change the values
+of the settings from here and there and see how it affects the scene. As you can see, if I turn
+off the dead ring completely, this is how it affects the entire scene. And also my laptop is very
+shitty, so I can't properly display the entire thing without dropping to two frames per second.
+But like I said, you can change around the values. It's completely up to you. And look at this
+real quick show you what I came up with. Like you know, you can use the PS6-based lighting
+tutorial that I have on my channel. You can use that to implement that into this
+project or, you know, any other project you want. So I'm going to be real quick showing you
+how you can do that. So go ahead into my Patreon, or if you don't have my Patreon, you can just go
+into the tutorial where I explained how to make this thing entirely scratch. And if you are
+subscribed to my Patreon, which you can do for just two downloads a month or so if you want to
+support the channel, you'd be able to download this package from here and then download this package
+imported into Unity. Once you import that fake light package, you'd see that the material is not
+working. You have to, again, select the material of this light thing and then manually change it
+into the PSX-select shader the way we did on the first part of the video. So you need to do that.
+And then you can just drag and drop the light cone and start aligning, aligning, aligning, aligning.
+Don't worry about it looking weird. Select the material and from here, change it from
+lit to on that because it's a light material. So now we're going to be tweaking this light and
+it's material to make it look more like a light. While selecting the light material from here,
+you should get something like this. You can change a few things from here. You want to set this
+per pixel. It looks really weird, but we're going to be fixing it like I said. And go down here and
+you should see the emission thing. Now, turn this completely to white and then you want to set the
+emission to something like one or something, like, I don't know, maybe just one one should be fine
+for now. This is something like this. You should get this. Now the material enable alpha clipping
+and then you want to also enable this deteriorating thing on the alpha. Then you want to change this
+slider like this. And as you can see, we're already getting some fall off in the end. Then you
+want to change that slider. You want to sort of like up and down that. And you also want to move
+that slider into the middle part for a little bit more fall off. And like this is because there's
+there's way too much deteriorating here over here. Also, like this real quick. Besides it a little
+bit so that it doesn't look weird. Also, while selecting a fake light cone, create an actual
+spotlight. You don't want it to be a point. You want it to be actually a spotlight and let me just
+look at turn on the gizmos. And then you want to change its rotation and align it exactly with your
+fake light. And then you want to increase its range because like sort of a little extra on
+its areas. And then to give it a little bit of a sense of depth.
+Now on this fall off settings, you want to edit this a little bit and then
+you know, there's a few things here you don't want this light to be affected by fall. Then you
+can just turn part way down. And just turn this here from ticket to the middle part to create a nice
+fall off effect at the end. And as you can see, we're already getting that light effect.
+So yeah, just do that. You also want to change the rendering mode from both to front only to get
+this sort of transfer aspect. And then you can change from the blending mode to additive or overlay
+or whatever you want to use. I wouldn't really recommend you using additive. I would recommend you
+is leaving it until the first one. But I'll just go with this additive. And then there's the
+transparent. It should be automatically set to transparent. If it's not, it's set to a big
+then just change it into transparent itself. And then there's the other few things
+such as if you want it to be affected by vertex tutoring or not. Other those type of things.
+And I would just leave them for now if you want more detail, you can watch the original
+creator's video. Okay, so that settles our PSX renderer feature. Now we're going to be going to
+some smaller basic parts since this is the part one. And I want to cover mostly very important
+steps for this one. So we've successfully learned how to use this thing. And if you want more
+details, you can go ahead and watch the creator's video for this PSX renderer flatland, which I'll
+be linking in the description. So yeah, congratulations you completed first segment of the video.
+Let's move on to the next one. Okay, quick answer for the previous video, which I made where you
+guys mentioned while there are white lines on my skybox. So as you can see in here, this is a
+traditional Unity skybox. And see the placement here? The way this skybox maps are placed. So in
+this one, however, the one that I used or I showed in the video didn't really have that,
+but I did actually fix it on using a sort of image editing software. And as you can see,
+I fixed this one. I shifted those over there from there to this so that kind of fixed the part.
+And this is the original one that I showed you in the video, this one, this one over here.
+So as you can see, there's a difference. I moved those parts of here. So just do that and
+everything in the skybox that you get should be working just fine. It's for the textures. I
+use a website called textures.com. Some of the textures here are paid, like, you know, the actual
+textures, but we're not going to be using them. We're going to be using the folder textures instead
+because making a model using folder textures is much easier than using any PBR material or anything
+like that. Just head on over here and select the folder textures from here and you can just
+write and look which kind of texture you want. You can even use keywords such as rust or
+car, abandoned, metal, making such keywords. And from the menu, you can filter many. You can just
+set textures to appear as only folder textures and then you can just select these photos and download
+whatever you want. You can spend each of your credits for one texture each, like, one credit for one
+texture. And we're going to be selecting the lowest resolution possible. Don't worry, the
+resolution doesn't aren't that shitty, but they're just enough for you to make a PS1 style model.
+Okay, just to prove my point, I'm going to be making a really simple PS1 model using just these
+textures and blend. You can download textures, save them up, create a very simple model with these
+and just cubes and stuff. Then you can just, you know, subdivide it, make some really cool geometry
+with it. You don't really have to go overboard with fans here or anything. By using the folder textures
+and keeping the file count really low, you can just make a really decent looking PS1 style texture,
+like, PS1 style model. Since the models don't really need any kind of detail and all that,
+stuff, you can just get away with having wobbly textures or wobbly materials. You know,
+we're looking models just slapping on the image texture on top of it. However, while using the PSX
+shaders, you would get a simple error, which is the, when you take down the geometry very low,
+or even keep it at middle, you might sometimes see that your models of 3D models are freaking out.
+That's because of the models not having enough vertices. So to fix that off, like, the thing
+happening, you can just select your time model and subdivide it a few times. I'll just be
+showing you how you can do that. Another handy trick, if you're having problems with texturing,
+just select the model, hit you, and then from there, select project from viewport, and like that,
+you can just easily project UVs onto your models, like, you know, on the textures by selecting it,
+that is much easier to just manually unwrapping the entire thing and just moving on to different textures.
+Sometimes you even might need to, like, hand paint some of the models or hand project them by selecting
+each of the other vertices. And to fix sometimes, like, the stretched out texture, you can just do that
+same thing and just, you know, just look project from viewport. Just to get things a little bit nicer,
+I'm going to be setting up a few lights and showing you how to do it.
+Okay, so now, like I said, if you're having issues with your models freaking out when you
+lower the geometry count on your PSX shader, then all you can do is just select your model,
+an open end up in blender or any other 3D editing software. Once you open it, select it all,
+go on to edit mode, and then from there, you can just select the entire model and then hit
+right click and subdivide, subdivide it a few times until it has enough of these squares,
+which are basically vertices. And that should fix your wobbliness and prevent your texture,
+I mean, your model from freaking out when you lower the geometry down.
+That should do for the first part. So I really covered the modeling and texturing part very little,
+but I would like to make a much more detailed version of it. So stay tuned for part two or just,
+you know, leave the tutorial, leave the channel right now after all that you got.
+Don't forget to leave a like and subscribe if you really enjoyed the video and if you want more
+videos like these, the entire project that I showed will be available in my Patreon for you to
+download and check out for yourself, or you can just follow on the tutorial. The link is in the
+description and you can just download the PSX shader from there, set it up on your own project,
+and if you make something really cool, don't mind leaving a link in the description for me to
+check out what you made.
