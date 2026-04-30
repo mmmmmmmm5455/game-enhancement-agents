@@ -1,0 +1,34 @@
+{
+  "game_dir": "C:/Users/qwqwh/.claude/projects/multi-agent-plan/output",
+  "existing_narrative": {
+    "dialogue_system": "WebSocket streaming typewriter with POST fallback",
+    "system_events": [
+      "critical_infection",
+      "infection_warning",
+      "are_you_real",
+      "scene_entered",
+      "fragment_found",
+      "system_message"
+    ],
+    "location_names": {
+      "rain_underpass": "雨中地下道",
+      "snow_bridge": "雪中天橋",
+      "fog_highway": "霧中公路",
+      "blizzard_street": "暴雪街道"
+    }
+  },
+  "scene_ids": [
+    "rain_underpass",
+    "snow_bridge",
+    "fog_highway",
+    "blizzard_street"
+  ],
+  "design_goals": [
+    "Add environmental narrative hooks to each scene (2+ per scene)",
+    "Design revisit triggers (3+ total) that change environment on return",
+    "Integrate 8 dreamcore cryptic text fragments with trigger conditions",
+    "Design glitched text mode for infection > 70%",
+    "Maintain Y2K dark cyan liminal tone — sparse communication, more silence",
+    "All hooks implementable in < 50 lines of JavaScript"
+  ]
+}

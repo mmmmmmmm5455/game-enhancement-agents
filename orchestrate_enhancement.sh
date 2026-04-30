@@ -1,11 +1,15 @@
 #!/bin/bash
 # =============================================================================
 # Game Enhancement Orchestration Script
-# Executes Phase A → B → C → D sequentially:
+# Executes Phase A → B → C → D → E → F → G → H:
 #   A: Game Test Team scan (A1 test execution, A5 UX eval, A7 content review)
 #   B: Art Style Reviewer (CSS/HTML audit + screenshot analysis)
 #   C: Video Research Synthesizer (video fetch + whisper + cross-reference)
 #   D: Game Enhancement PRD Writer (consolidate A+B+C → PRD)
+#   E: Audio Director (Web Audio API drones + environmental sounds)
+#   F: QA Lead (regression verification + quality gates)
+#   G: Creative Director (cross-phase aesthetic signoff)
+#   H: Game Designer (narrative hooks + dreamcore fragments)
 # =============================================================================
 
 set -euo pipefail
@@ -69,7 +73,6 @@ check_prerequisite() {
 
 validate_json() {
     local file="$1"
-    local schema="$2"
     if ! jq empty "$file" 2>/dev/null; then
         log_error "Invalid JSON: $file"
         return 1
@@ -98,6 +101,14 @@ run_preflight() {
         "video_synth_output.json"
         "enhancement_prd_input.json"
         "enhancement_prd_output.json"
+        "audio_director_input.json"
+        "audio_director_output.json"
+        "qa_lead_input.json"
+        "qa_lead_output.json"
+        "creative_director_input.json"
+        "creative_director_output.json"
+        "game_designer_input.json"
+        "game_designer_output.json"
     )
     for schema in "${schemas[@]}"; do
         if [ ! -f "$SCHEMAS_DIR/$schema" ]; then
@@ -111,6 +122,10 @@ run_preflight() {
         "art_style_reviewer.md"
         "video_research_synth.md"
         "enhancement_prd_writer.md"
+        "audio_director.md"
+        "qa_lead.md"
+        "creative_director.md"
+        "game_designer.md"
     )
     for prompt in "${prompts[@]}"; do
         if [ ! -f "$PROMPTS_DIR/$prompt" ]; then
@@ -350,6 +365,225 @@ run_phase_d() {
 }
 
 # =============================================================================
+# Phase E: Audio Director
+# =============================================================================
+
+run_phase_e() {
+    log_info "=== PHASE E: Audio Director ==="
+
+    # Build input JSON
+    local input_json="$OUTPUT_DIR/audio_director_input.json"
+    jq -n \
+        --arg game_dir "$GAME_DIR" \
+        --argjson scene_ids '["fog_highway","rain_underpass","snow_bridge","blizzard_street"]' \
+        --arg target "y2k_dark_cyan_liminal" \
+        '{
+            game_dir: $game_dir,
+            scene_ids: $scene_ids,
+            target_aesthetic: $target,
+            audio_constraints: {
+                no_background_music: true,
+                diegetic_only: true,
+                max_ambient_volume_pct: 20,
+                dominant_frequency_range_hz: "<200",
+                output_format: "web_audio_api",
+                crossfade_duration_ms: 3000
+            }
+        }' > "$input_json"
+
+    validate_json "$input_json" || exit 1
+    log_info "Audio Director input written to: $input_json"
+
+    log_info "Invoking Audio Director agent..."
+    log_info "Paste this into a Claude Code window to execute:"
+    log_info "  Read prompts/audio_director.md and execute with input: $input_json"
+    log_info "  Output expected at: $OUTPUT_DIR/audio_director_output.json"
+    log_info "  Design doc expected at: $OUTPUT_DIR/audio_design.md"
+    log_info "  Implementation expected at: $GAME_DIR/js/audio.js"
+
+    echo "$input_json"
+}
+
+# =============================================================================
+# Phase F: QA Lead
+# =============================================================================
+
+run_phase_f() {
+    log_info "=== PHASE F: QA Lead ==="
+
+    local prd_path="$OUTPUT_DIR/enhancement_prd.md"
+    local prd_json_path="$OUTPUT_DIR/enhancement_prd_output.json"
+
+    if [ ! -f "$prd_path" ]; then
+        log_error "PRD not found: $prd_path — Phase D must complete first"
+        return 1
+    fi
+
+    local phase_to_verify="${1:-phase_1}"
+
+    # Build input JSON
+    local input_json="$OUTPUT_DIR/qa_lead_input.json"
+    jq -n \
+        --arg game_url "http://localhost:8765" \
+        --arg prd_path "$prd_path" \
+        --arg prd_json_path "$prd_json_path" \
+        --arg phase "$phase_to_verify" \
+        --arg test_depth "standard" \
+        '{
+            game_url: $game_url,
+            prd_path: $prd_path,
+            prd_json_path: $prd_json_path,
+            phase_to_verify: $phase,
+            test_depth: $test_depth,
+            scene_test_order: ["fog_highway","rain_underpass","snow_bridge","blizzard_street"],
+            known_bugs: [
+                {bug_id: "BUG-01", description: "Scene dispose() not wrapped in try/catch", severity: "critical"},
+                {bug_id: "BUG-02", description: "CRT CSS/WebGL double-processing", severity: "high"},
+                {bug_id: "BUG-03", description: "WebSocket timeout too generous", severity: "high"},
+                {bug_id: "BUG-04", description: "Fragment counter caps at 99", severity: "medium"},
+                {bug_id: "BUG-05", description: "No scene load failure handling", severity: "medium"}
+            ]
+        }' > "$input_json"
+
+    validate_json "$input_json" || exit 1
+    log_info "QA Lead input written to: $input_json"
+
+    log_info "Invoking QA Lead agent..."
+    log_info "Paste this into a Claude Code window to execute:"
+    log_info "  Read prompts/qa_lead.md and execute with input: $input_json"
+    log_info "  Output expected at: $OUTPUT_DIR/qa_lead_output.json"
+    log_info "  Report expected at: $OUTPUT_DIR/qa_test_report.md"
+
+    echo "$input_json"
+}
+
+# =============================================================================
+# Phase G: Creative Director
+# =============================================================================
+
+run_phase_g() {
+    log_info "=== PHASE G: Creative Director ==="
+
+    local art_review_json="$OUTPUT_DIR/art_reviewer_output.json"
+    local art_review_report="$OUTPUT_DIR/art_review_report.md"
+    local video_synth_json="$OUTPUT_DIR/video_synth_output.json"
+    local video_research_report="$OUTPUT_DIR/video_research_report.md"
+    local prd_path="$OUTPUT_DIR/enhancement_prd.md"
+    local prd_json_path="$OUTPUT_DIR/enhancement_prd_output.json"
+    local game_test_report
+    game_test_report=$(ls -t "$OUTPUT_DIR"/game_test_report_*.md 2>/dev/null | head -1 || echo "")
+    local audio_design_doc="$OUTPUT_DIR/audio_design.md"
+
+    # Verify required inputs exist
+    local missing=false
+    [ -f "$art_review_json" ] || { log_warn "Missing: $art_review_json"; }
+    [ -f "$video_synth_json" ] || { log_warn "Missing: $video_synth_json"; }
+    [ -f "$prd_path" ] || { log_error "Missing: $prd_path"; missing=true; }
+    if [ "$missing" = true ]; then
+        log_error "Phase G cannot run — missing required Phase D output"
+        return 1
+    fi
+
+    # Build input JSON
+    local input_json="$OUTPUT_DIR/creative_director_input.json"
+    jq -n \
+        --arg art_json "$art_review_json" \
+        --arg art_report "$art_review_report" \
+        --arg vid_json "$video_synth_json" \
+        --arg vid_report "$video_research_report" \
+        --arg prd_path "$prd_path" \
+        --arg prd_json "$prd_json_path" \
+        --arg test_report "${game_test_report:-}" \
+        --arg audio_doc "$audio_design_doc" \
+        --argjson target 90 \
+        '{
+            art_review_path: $art_report,
+            art_review_json_path: $art_json,
+            video_research_path: $vid_report,
+            video_research_json_path: $vid_json,
+            enhancement_prd_path: $prd_path,
+            enhancement_prd_json_path: $prd_json,
+            game_test_report_path: $test_report,
+            audio_design_doc_path: $audio_doc,
+            target_score: $target,
+            review_dimensions: [
+                "color_palette",
+                "crt_effects",
+                "typography",
+                "scene_atmosphere",
+                "audio_design",
+                "narrative_consistency",
+                "accessibility"
+            ]
+        }' > "$input_json"
+
+    validate_json "$input_json" || exit 1
+    log_info "Creative Director input written to: $input_json"
+
+    log_info "Invoking Creative Director agent..."
+    log_info "Paste this into a Claude Code window to execute:"
+    log_info "  Read prompts/creative_director.md and execute with input: $input_json"
+    log_info "  Output expected at: $OUTPUT_DIR/creative_director_output.json"
+    log_info "  Report expected at: $OUTPUT_DIR/creative_review_report.md"
+
+    echo "$input_json"
+}
+
+# =============================================================================
+# Phase H: Game Designer
+# =============================================================================
+
+run_phase_h() {
+    log_info "=== PHASE H: Game Designer ==="
+
+    # Build existing_narrative from known game state
+    local input_json="$OUTPUT_DIR/game_designer_input.json"
+    jq -n \
+        --arg game_dir "$GAME_DIR" \
+        --argjson scene_ids '["rain_underpass","snow_bridge","fog_highway","blizzard_street"]' \
+        '{
+            game_dir: $game_dir,
+            existing_narrative: {
+                dialogue_system: "WebSocket streaming typewriter with POST fallback",
+                system_events: [
+                    "critical_infection",
+                    "infection_warning",
+                    "are_you_real",
+                    "scene_entered",
+                    "fragment_found",
+                    "system_message"
+                ],
+                location_names: {
+                    rain_underpass: "雨中地下道",
+                    snow_bridge: "雪中天橋",
+                    fog_highway: "霧中公路",
+                    blizzard_street: "暴雪街道"
+                }
+            },
+            scene_ids: $scene_ids,
+            design_goals: [
+                "Add environmental narrative hooks to each scene (2+ per scene)",
+                "Design revisit triggers (3+ total) that change environment on return",
+                "Integrate 8 dreamcore cryptic text fragments with trigger conditions",
+                "Design glitched text mode for infection > 70%",
+                "Maintain Y2K dark cyan liminal tone — sparse communication, more silence",
+                "All hooks implementable in < 50 lines of JavaScript"
+            ]
+        }' > "$input_json"
+
+    validate_json "$input_json" || exit 1
+    log_info "Game Designer input written to: $input_json"
+
+    log_info "Invoking Game Designer agent..."
+    log_info "Paste this into a Claude Code window to execute:"
+    log_info "  Read prompts/game_designer.md and execute with input: $input_json"
+    log_info "  Output expected at: $OUTPUT_DIR/game_designer_output.json"
+    log_info "  Spec expected at: $OUTPUT_DIR/narrative_hooks.md"
+
+    echo "$input_json"
+}
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -357,7 +591,7 @@ main() {
     echo ""
     echo -e "${CYAN}╔══════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${CYAN}║     Game Enhancement Orchestration — Y2K Dark Cyan Aesthetic ║${NC}"
-    echo -e "${CYAN}║                      Phase A → B → C → D                     ║${NC}"
+    echo -e "${CYAN}║                Phase A → B → C → D → E → F → G → H           ║${NC}"
     echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
     log_info "Starting orchestration at $(date)"
@@ -380,6 +614,18 @@ main() {
             ;;
         --phase-d|d)
             run_phase_d
+            ;;
+        --phase-e|e)
+            run_phase_e
+            ;;
+        --phase-f|f)
+            run_phase_f "${2:-phase_1}"
+            ;;
+        --phase-g|g)
+            run_phase_g
+            ;;
+        --phase-h|h)
+            run_phase_h
             ;;
         --force-phase-a)
             rm -f "$OUTPUT_DIR"/game_test_report_*.md
@@ -412,15 +658,43 @@ main() {
             else
                 log_error "Phase D skipped — missing Phase B/C outputs"
             fi
+
+            # Phase E (Audio Director)
+            local audio_input
+            audio_input=$(run_phase_e)
+            log_ok "Phase E input prepared — input: $audio_input"
+            log_warn "Phase E agent must be invoked manually in Claude Code (see above)"
+
+            # Phase F (QA Lead — runs Phase 1 verification by default)
+            local qa_input
+            qa_input=$(run_phase_f "phase_1")
+            log_ok "Phase F input prepared — input: $qa_input"
+            log_warn "Phase F agent must be invoked manually in Claude Code (see above)"
+
+            # Phase G (Creative Director — requires D outputs, benefits from E/F)
+            local cd_input
+            cd_input=$(run_phase_g 2>/dev/null || echo "skipped (missing prerequisites)")
+            log_ok "Phase G input prepared — input: $cd_input"
+            log_warn "Phase G agent must be invoked manually in Claude Code (see above)"
+
+            # Phase H (Game Designer)
+            local gd_input
+            gd_input=$(run_phase_h)
+            log_ok "Phase H input prepared — input: $gd_input"
+            log_warn "Phase H agent must be invoked manually in Claude Code (see above)"
             ;;
         *)
-            echo "Usage: $0 [--phase-a|--phase-b|--phase-c|--phase-d|--force-phase-a|all]"
+            echo "Usage: $0 [--phase-a|...|--phase-h|--force-phase-a|all]"
             echo ""
             echo "  all            Run all phases sequentially (default)"
-            echo "  --phase-a      Run only Phase A (Game Test Team scan)"
-            echo "  --phase-b      Run only Phase B (Art Style Reviewer prep)"
-            echo "  --phase-c      Run only Phase C (Video Research Synth prep)"
-            echo "  --phase-d      Run only Phase D (Enhancement PRD Writer)"
+            echo "  --phase-a      Phase A: Game Test Team scan"
+            echo "  --phase-b      Phase B: Art Style Reviewer prep"
+            echo "  --phase-c      Phase C: Video Research Synth prep"
+            echo "  --phase-d      Phase D: Enhancement PRD Writer"
+            echo "  --phase-e      Phase E: Audio Director (Web Audio API drones)"
+            echo "  --phase-f      Phase F: QA Lead [phase_1|phase_2|phase_3|all]"
+            echo "  --phase-g      Phase G: Creative Director (aesthetic signoff)"
+            echo "  --phase-h      Phase H: Game Designer (narrative hooks)"
             echo "  --force-phase-a  Re-run Phase A even if existing report found"
             exit 1
             ;;

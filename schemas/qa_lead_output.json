@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-lead-output",
+  "title": "QA Lead Output",
+  "type": "object",
+  "required": ["test_run_id", "overall_health_score", "regression_results", "new_bugs", "phase_acceptance", "quality_gate_results"],
+  "properties": {
+    "test_run_id": {
+      "type": "string",
+      "description": "Unique identifier for this test run, e.g., 'qa-20260430-001'"
+    },
+    "overall_health_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "gstack-qa health score: start at 100, -15 per critical, -8 per high, -3 per medium, -1 per low"
+    },
+    "regression_results": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["bug_id", "status", "evidence"],
+        "properties": {
+          "bug_id": { "type": "string", "description": "BUG-01 through BUG-05" },
+          "status": { "type": "string", "enum": ["fixed", "still_open", "regressed", "cannot_verify"] },
+          "evidence": { "type": "string", "description": "Grep command output, file content snippet, or screenshot path" }
+        }
+      }
+    },
+    "new_bugs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["bug_id", "severity", "file", "line", "description", "repro_steps"],
+        "properties": {
+          "bug_id": { "type": "string" },
+          "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+          "file": { "type": "string" },
+          "line": { "type": "integer" },
+          "description": { "type": "string" },
+          "repro_steps": { "type": "string" }
+        }
+      }
+    },
+    "phase_acceptance": {
+      "type": "object",
+      "required": ["phase_1_criteria_met", "phase_2_criteria_met", "phase_3_criteria_met"],
+      "properties": {
+        "phase_1_criteria_met": { "type": "boolean" },
+        "phase_2_criteria_met": { "type": "boolean" },
+        "phase_3_criteria_met": { "type": "boolean" },
+        "blocking_issues": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Issues that block phase acceptance"
+        }
+      }
+    },
+    "quality_gate_results": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["gate_command", "passed", "actual_output"],
+        "properties": {
+          "gate_command": { "type": "string", "description": "The exact verification command executed" },
+          "passed": { "type": "boolean" },
+          "actual_output": { "type": "string", "description": "Raw output from the command" }
+        }
+      }
+    }
+  }
+}

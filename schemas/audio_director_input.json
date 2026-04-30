@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audio-director-input",
+  "title": "Audio Director Input",
+  "type": "object",
+  "required": ["game_dir", "scene_ids", "target_aesthetic"],
+  "properties": {
+    "game_dir": {
+      "type": "string",
+      "description": "Root of the game project, e.g., C:/Users/qwqwh/.claude/projects/multi-agent-plan/output"
+    },
+    "scene_ids": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["rain_underpass", "snow_bridge", "fog_highway", "blizzard_street"] },
+      "minItems": 4,
+      "description": "Scene identifiers requiring ambient audio drones"
+    },
+    "target_aesthetic": {
+      "type": "string",
+      "const": "y2k_dark_cyan_liminal",
+      "description": "Aesthetic target for audio direction"
+    },
+    "audio_constraints": {
+      "type": "object",
+      "properties": {
+        "no_background_music": { "type": "boolean", "default": true },
+        "diegetic_only": { "type": "boolean", "default": true },
+        "max_ambient_volume_pct": { "type": "integer", "default": 20, "minimum": 0, "maximum": 100 },
+        "dominant_frequency_range_hz": { "type": "string", "default": "<200" },
+        "output_format": { "type": "string", "enum": ["web_audio_api", "mp3_files", "both"], "default": "web_audio_api" },
+        "crossfade_duration_ms": { "type": "integer", "default": 3000 }
+      }
+    },
+    "existing_audio_path": {
+      "type": "string",
+      "description": "Path to existing audio assets (expected: empty — game has no audio system)",
+      "default": ""
+    }
+  }
+}

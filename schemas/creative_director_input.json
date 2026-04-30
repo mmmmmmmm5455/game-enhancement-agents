@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "creative-director-input",
+  "title": "Creative Director Input",
+  "type": "object",
+  "required": ["art_review_path", "video_research_path", "enhancement_prd_path", "target_score"],
+  "properties": {
+    "art_review_path": {
+      "type": "string",
+      "description": "Path to Phase B art review report, e.g., 'output/art_review_report.md'"
+    },
+    "art_review_json_path": {
+      "type": "string",
+      "description": "Path to Phase B structured output, e.g., 'output/art_reviewer_output.json'"
+    },
+    "video_research_path": {
+      "type": "string",
+      "description": "Path to Phase C video research report, e.g., 'output/video_research_report.md'"
+    },
+    "video_research_json_path": {
+      "type": "string",
+      "description": "Path to Phase C structured output, e.g., 'output/video_synth_output.json'"
+    },
+    "enhancement_prd_path": {
+      "type": "string",
+      "description": "Path to Phase D enhancement PRD, e.g., 'output/enhancement_prd.md'"
+    },
+    "enhancement_prd_json_path": {
+      "type": "string",
+      "description": "Path to Phase D structured output, e.g., 'output/enhancement_prd_output.json'"
+    },
+    "game_test_report_path": {
+      "type": "string",
+      "description": "Path to Phase A game test report, e.g., 'output/game_test_report.md'"
+    },
+    "audio_design_doc_path": {
+      "type": "string",
+      "description": "Path to Audio Director output (may not exist yet)"
+    },
+    "qa_report_path": {
+      "type": "string",
+      "description": "Path to QA Lead output (may not exist yet)"
+    },
+    "target_score": {
+      "type": "integer",
+      "default": 90,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Minimum acceptable overall score for signoff"
+    },
+    "review_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["color_palette", "crt_effects", "typography", "scene_atmosphere", "audio_design", "narrative_consistency", "accessibility"]
+      },
+      "default": ["color_palette", "crt_effects", "typography", "scene_atmosphere", "audio_design", "narrative_consistency", "accessibility"],
+      "description": "Dimensions to review"
+    }
+  }
+}

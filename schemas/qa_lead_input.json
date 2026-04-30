@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa-lead-input",
+  "title": "QA Lead Input",
+  "type": "object",
+  "required": ["game_url", "prd_path", "phase_to_verify"],
+  "properties": {
+    "game_url": {
+      "type": "string",
+      "description": "URL where the game is served, e.g., 'http://localhost:8765'"
+    },
+    "prd_path": {
+      "type": "string",
+      "description": "Path to enhancement_prd.md for acceptance criteria"
+    },
+    "prd_json_path": {
+      "type": "string",
+      "description": "Path to enhancement_prd_output.json for structured task list and verification commands"
+    },
+    "phase_to_verify": {
+      "type": "string",
+      "enum": ["phase_1", "phase_2", "phase_3", "all"],
+      "default": "all"
+    },
+    "test_depth": {
+      "type": "string",
+      "enum": ["quick", "standard", "exhaustive"],
+      "default": "standard",
+      "description": "Per gstack-qa tier system: quick=critical+high only, standard=+medium, exhaustive=+cosmetic"
+    },
+    "scene_test_order": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["fog_highway", "rain_underpass", "snow_bridge", "blizzard_street"] },
+      "default": ["fog_highway", "rain_underpass", "snow_bridge", "blizzard_street"]
+    },
+    "known_bugs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["BUG-01", "BUG-02", "BUG-03", "BUG-04", "BUG-05"],
+      "description": "Bug IDs from Phase A game test report for regression verification"
+    }
+  }
+}

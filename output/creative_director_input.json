@@ -1,0 +1,20 @@
+{
+  "art_review_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/art_review_report.md",
+  "art_review_json_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/art_reviewer_output.json",
+  "video_research_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/video_research_report.md",
+  "video_research_json_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/video_synth_output.json",
+  "enhancement_prd_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/enhancement_prd.md",
+  "enhancement_prd_json_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/enhancement_prd_output.json",
+  "game_test_report_path": "",
+  "audio_design_doc_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/audio_design.md",
+  "target_score": 90,
+  "review_dimensions": [
+    "color_palette",
+    "crt_effects",
+    "typography",
+    "scene_atmosphere",
+    "audio_design",
+    "narrative_consistency",
+    "accessibility"
+  ]
+}

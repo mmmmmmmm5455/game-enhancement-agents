@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "game-designer-input",
+  "title": "Game Designer Input",
+  "type": "object",
+  "required": ["game_dir", "existing_narrative", "scene_ids"],
+  "properties": {
+    "game_dir": {
+      "type": "string",
+      "description": "Root of the game project, e.g., 'C:/Users/qwqwh/.claude/projects/multi-agent-plan/output'"
+    },
+    "existing_narrative": {
+      "type": "object",
+      "required": ["dialogue_system", "system_events", "location_names"],
+      "properties": {
+        "dialogue_system": {
+          "type": "string",
+          "description": "How dialogue is delivered, e.g., 'WebSocket streaming typewriter with POST fallback'"
+        },
+        "system_events": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Known system event types, e.g., ['critical_infection', 'infection_warning', 'are_you_real']"
+        },
+        "location_names": {
+          "type": "object",
+          "description": "Scene ID → display name in zh-TW",
+          "properties": {
+            "rain_underpass": { "type": "string" },
+            "snow_bridge": { "type": "string" },
+            "fog_highway": { "type": "string" },
+            "blizzard_street": { "type": "string" }
+          }
+        }
+      }
+    },
+    "scene_ids": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["rain_underpass", "snow_bridge", "fog_highway", "blizzard_street"] },
+      "minItems": 4
+    },
+    "design_goals": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [
+        "Add environmental narrative hooks to each scene (2+ per scene)",
+        "Design revisit triggers (3+ total) that change environment on return",
+        "Integrate 8 dreamcore cryptic text fragments with trigger conditions",
+        "Design glitched text mode for infection > 70%",
+        "Maintain Y2K dark cyan liminal tone — sparse communication, more silence",
+        "All hooks implementable in < 50 lines of JavaScript"
+      ]
+    }
+  }
+}

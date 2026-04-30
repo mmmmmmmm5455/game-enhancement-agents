@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "game-designer-output",
+  "title": "Game Designer Output",
+  "type": "object",
+  "required": ["narrative_hook_specs", "revisit_trigger_specs", "dreamcore_fragment_specs", "glitched_text_spec", "implementation_notes"],
+  "properties": {
+    "narrative_hook_specs": {
+      "type": "array",
+      "minItems": 8,
+      "description": "At least 2 environmental narrative hooks per scene",
+      "items": {
+        "type": "object",
+        "required": ["scene_id", "hook_type", "description", "trigger_condition", "file_to_modify"],
+        "properties": {
+          "scene_id": { "type": "string", "enum": ["rain_underpass", "snow_bridge", "fog_highway", "blizzard_street"] },
+          "hook_type": { "type": "string", "enum": ["environmental_text", "object_state_change", "lighting_change", "audio_cue", "dialogue_fragment"] },
+          "description": { "type": "string" },
+          "trigger_condition": { "type": "string", "description": "JavaScript boolean expression, e.g., 'app.visitedScenes.has(\"snow_bridge\") && data.infection_level > 30'" },
+          "file_to_modify": { "type": "string", "description": "Source file that implements this hook" }
+        }
+      }
+    },
+    "revisit_trigger_specs": {
+      "type": "array",
+      "minItems": 3,
+      "description": "At least 3 revisit mechanics triggered when player returns to a scene",
+      "items": {
+        "type": "object",
+        "required": ["trigger_id", "trigger_type", "condition", "effect", "implementation"],
+        "properties": {
+          "trigger_id": { "type": "string" },
+          "trigger_type": { "type": "string", "enum": ["threshold", "cross_scene", "infection_gated", "fragment_gated"] },
+          "condition": { "type": "string", "description": "JavaScript boolean expression" },
+          "effect": { "type": "string", "description": "What the player experiences" },
+          "implementation": { "type": "string", "description": "Code pattern: function name, file, line to modify" }
+        }
+      }
+    },
+    "dreamcore_fragment_specs": {
+      "type": "object",
+      "required": ["fragments", "display_behavior", "frequency_control"],
+      "properties": {
+        "fragments": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "required": ["text", "trigger_condition"],
+            "properties": {
+              "text": { "type": "string" },
+              "trigger_condition": { "type": "string", "description": "When this fragment appears" }
+            }
+          }
+        },
+        "display_behavior": {
+          "type": "object",
+          "required": ["position", "animation", "duration_ms"],
+          "properties": {
+            "position": { "type": "string", "description": "CSS position, e.g., 'random 10-30% from top, 5-15% from left'" },
+            "animation": { "type": "string", "description": "CSS animation, e.g., 'fadeIn 2s, hold 8s, fadeOut 2s'" },
+            "duration_ms": { "type": "integer", "description": "Total display duration in milliseconds" }
+          }
+        },
+        "frequency_control": {
+          "type": "object",
+          "required": ["min_interval_ms", "max_interval_ms", "infection_scaling"],
+          "properties": {
+            "min_interval_ms": { "type": "integer", "description": "Minimum time between fragments" },
+            "max_interval_ms": { "type": "integer" },
+            "infection_scaling": { "type": "boolean", "description": "true if higher infection = more frequent fragments" }
+          }
+        }
+      }
+    },
+    "glitched_text_spec": {
+      "type": "object",
+      "required": ["corruption_rate_min", "corruption_rate_max", "trigger_threshold", "corruption_method"],
+      "properties": {
+        "corruption_rate_min": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Corruption rate at infection=70 (e.g., 0.05 = 5%)" },
+        "corruption_rate_max": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Corruption rate at infection=95 (e.g., 0.30 = 30%)" },
+        "trigger_threshold": { "type": "integer", "description": "Infection level at which glitching begins (default: 70)" },
+        "corruption_method": { "type": "string", "enum": ["unicode_combining", "character_replacement", "mixed"], "description": "How text is corrupted" },
+        "implementation_function": { "type": "string", "description": "Function signature, e.g., 'corruptText(text, infectionLevel) → string'" }
+      }
+    },
+    "implementation_notes": {
+      "type": "object",
+      "required": ["code_changes_required", "new_files_needed", "estimated_effort_hours"],
+      "properties": {
+        "code_changes_required": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of specific code changes with file paths"
+        },
+        "new_files_needed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "estimated_effort_hours": { "type": "number" }
+      }
+    }
+  }
+}

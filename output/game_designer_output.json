@@ -1,0 +1,167 @@
+{
+  "narrative_hook_specs": [
+    {
+      "scene_id": "rain_underpass",
+      "hook_type": "object_state_change",
+      "description": "Graffiti text '你還在嗎' appears on the underpass wall as a CanvasTexture decal. Was not present on first visit. Low opacity (0.3), cold cyan color, appears organic — like it was sprayed there.",
+      "trigger_condition": "app.visitedScenes.has('rain_underpass') && data.visitCount >= 2",
+      "file_to_modify": "frontend/js/scenes/rain_underpass.js"
+    },
+    {
+      "scene_id": "rain_underpass",
+      "hook_type": "audio_cue",
+      "description": "Water drip interval shifts from regular 2-5s to irregular 8-15s with occasional double-drip (second drip follows 0.3s after first). The irregularity creates subliminal unease — the space is changing but not explaining itself.",
+      "trigger_condition": "app.visitedScenes.has('rain_underpass') && data.infection_level > 35",
+      "file_to_modify": "frontend/js/audio.js"
+    },
+    {
+      "scene_id": "snow_bridge",
+      "hook_type": "object_state_change",
+      "description": "A single set of footprints in the snow leading away from the bridge toward the distant housing blocks. Were not present on first visit. Low-poly depression geometry with cold blue-tinted snow inside the prints.",
+      "trigger_condition": "app.visitedScenes.has('snow_bridge') && data.visitCount >= 2",
+      "file_to_modify": "frontend/js/scenes/snow_bridge.js"
+    },
+    {
+      "scene_id": "snow_bridge",
+      "hook_type": "object_state_change",
+      "description": "Distant housing block: one additional window is now emitting cold cyan light. On first visit 3 windows were lit; now there are 4. The fourth window is on the top floor, far right — was previously dark.",
+      "trigger_condition": "app.visitedScenes.has('snow_bridge') && data.infection_level > 40",
+      "file_to_modify": "frontend/js/scenes/snow_bridge.js"
+    },
+    {
+      "scene_id": "fog_highway",
+      "hook_type": "object_state_change",
+      "description": "An abandoned car wreck materializes at the edge of the fog draw distance (~40 units from player). Low-poly silhouette — dark gray with barely visible hazard lights (cold amber, 0x00bcd4 glow). Was not present on previous visit.",
+      "trigger_condition": "app.visitedScenes.has('fog_highway') && data.visitCount >= 2",
+      "file_to_modify": "frontend/js/scenes/fog_highway.js"
+    },
+    {
+      "scene_id": "fog_highway",
+      "hook_type": "lighting_change",
+      "description": "Fog density permanently increases by 40% (fogDensityBase × 1.4). Visibility drops from ~45 units to ~27 units. The highway is being consumed by fog. Reverts only if infection drops below 60.",
+      "trigger_condition": "app.visitedScenes.has('fog_highway') && data.infection_level > 60",
+      "file_to_modify": "frontend/js/background.js"
+    },
+    {
+      "scene_id": "blizzard_street",
+      "hook_type": "lighting_change",
+      "description": "One streetlight (the second from the left) has burned out. The pool of cold cyan light it previously cast is now darkness. A faint wisp of smoke/steam rises from the dead fixture (small particle effect). The street is dimmer.",
+      "trigger_condition": "app.visitedScenes.has('blizzard_street') && data.visitCount >= 2",
+      "file_to_modify": "frontend/js/scenes/blizzard_street.js"
+    },
+    {
+      "scene_id": "blizzard_street",
+      "hook_type": "object_state_change",
+      "description": "Emergency light on the distant building facade starts blinking with irregular intervals (1-3s random). Casts a brief cold amber flash across the street each cycle. Was completely off on previous visits.",
+      "trigger_condition": "app.visitedScenes.has('blizzard_street') && data.infection_level > 50",
+      "file_to_modify": "frontend/js/scenes/blizzard_street.js"
+    },
+    {
+      "scene_id": "rain_underpass",
+      "hook_type": "lighting_change",
+      "description": "Fluorescent ceiling light flickers off for exactly 1 frame (~16ms), then returns to normal. Only on third+ visit. Player may question if they imagined it. The flicker coincides with a 0.1s audio dropout in the drone.",
+      "trigger_condition": "app.visitedScenes.has('rain_underpass') && data.visitCount >= 3",
+      "file_to_modify": "frontend/js/scenes/rain_underpass.js"
+    },
+    {
+      "scene_id": "snow_bridge",
+      "hook_type": "audio_cue",
+      "description": "Wind drone gains a dissonant second oscillator layer — a 73Hz sine wave LFO modulating the main drone gain at 0.13Hz. Creates a slow beating/pulsing that makes the cold feel deeper. Only triggers after collecting fragments.",
+      "trigger_condition": "data.memory_fragments >= 3 && app.visitedScenes.has('snow_bridge')",
+      "file_to_modify": "frontend/js/audio.js"
+    }
+  ],
+  "revisit_trigger_specs": [
+    {
+      "trigger_id": "TRIGGER-01",
+      "trigger_type": "threshold",
+      "condition": "app.visitedScenes.size >= 3 && totalVisits >= 5",
+      "effect": "Viewer counter permanently increments from 1 to 2. System message displays: 'Viewer #2 connected.' No further explanation. The counter never goes back down. Player knows someone else is now watching.",
+      "implementation": "app.js:applyGameResponse() — after scene_trigger processing, check visitedScenes.size >= 3 and !viewerBumped flag; if true, set viewerCount = 2, show system dialog with message, set viewerBumped = true"
+    },
+    {
+      "trigger_id": "TRIGGER-02",
+      "trigger_type": "cross_scene",
+      "condition": "app.visitedScenes.has('rain_underpass') && app.visitedScenes.has('snow_bridge') && currentScene === 'rain_underpass'",
+      "effect": "Water drips in rain_underpass now have frozen quality: interval doubles to 5-10s, each drip followed 0.2s later by faint ice-crack burst (80Hz filtered noise, 50ms duration, 3% volume). The rain is freezing over.",
+      "implementation": "audio.js:createRainDrips() — accept visitedScenes parameter, check cross-scene condition, modify interval range to [5000,10000], add secondary short noise burst after each drip"
+    },
+    {
+      "trigger_id": "TRIGGER-03",
+      "trigger_type": "infection_gated",
+      "condition": "data.infection_level > 55 && app.visitedScenes.has('fog_highway') && data.visitCount >= 2",
+      "effect": "Fog density permanently increases by 50% (fogDensityBase × 1.5) and fog color shifts slightly toward green-cyan (0x003a4a → 0x003a3a). The highway is literally sick. Reverts if infection drops below 55.",
+      "implementation": "background.js:switchScene() — in fog_highway case, if infection >55 and visited, multiply fogDensityBase by 1.5, adjust fog.color toward green-mixed cyan"
+    },
+    {
+      "trigger_id": "TRIGGER-04",
+      "trigger_type": "fragment_gated",
+      "condition": "data.memory_fragments >= 5",
+      "effect": "20% chance on each subsequent scene transition of a 1-frame white flash (full-screen white div, opacity 0.3, removed after 50ms). The world is glitching. A glass-shatter-like short noise burst accompanies it (white noise 30ms, 5% volume).",
+      "implementation": "app.js:applyGameResponse() — on scene_trigger, if fragments >=5, roll Math.random() < 0.2, create flash overlay div with setTimeout removal at 50ms. background.js: separately trigger noise burst on flash."
+    },
+    {
+      "trigger_id": "TRIGGER-05",
+      "trigger_type": "threshold",
+      "condition": "app.visitedScenes.has('blizzard_street') && data.visitCount >= 3 && data.infection_level > 40",
+      "effect": "Snow particle count increases 50% (current: ~500 particles → 750), particle velocity doubles, visibility drops. An overturned trash can (low-poly cylinder + box) appears near the second streetlight. The blizzard is intensifying each time the player returns.",
+      "implementation": "frontend/js/scenes/blizzard_street.js:createScene_blizzard_street() — check visitCount >=3 and infection >40; multiply particle count by 1.5, speed by 2.0; add trash can mesh group at predefined coordinates near streetlight"
+    }
+  ],
+  "dreamcore_fragment_specs": {
+    "fragments": [
+      { "text": "are you still there", "trigger_condition": "infection_level >= 20, random timer 45-120s after scene entry" },
+      { "text": "this is not a place", "trigger_condition": "infection_level >= 30, random timer 60-150s after previous fragment" },
+      { "text": "you have been here before", "trigger_condition": "triggered on any scene revisit (visitCount >= 2), appears within 30s of entry" },
+      { "text": "they are watching through the screen", "trigger_condition": "viewer_count >= 2, random timer 90-180s" },
+      { "text": "the signal is decaying", "trigger_condition": "infection_level >= 50, random timer 30-90s" },
+      { "text": "don't trust the viewer count", "trigger_condition": "viewer_count >= 1 && infection_level >= 40, random timer 60-120s" },
+      { "text": "this space has no exit", "trigger_condition": "fragments_collected >= 5 && visitedScenes.size >= 3, random timer 120-240s" },
+      { "text": "your body is not here", "trigger_condition": "infection_level >= 65, appears immediately on reaching threshold" },
+      { "text": "they rebuilt it wrong", "trigger_condition": "visitedScenes.size >= 4 (all scenes visited), random timer 60-150s" },
+      { "text": "wake up", "trigger_condition": "infection_level >= 90, appears immediately, only once per session" }
+    ],
+    "display_behavior": {
+      "position": "random 10-30% from top, 5-15% from left",
+      "animation": "fadeIn 2s ease-in, hold 8s, fadeOut 2s ease-out",
+      "duration_ms": 12000
+    },
+    "frequency_control": {
+      "min_interval_ms": 45000,
+      "max_interval_ms": 240000,
+      "infection_scaling": true
+    }
+  },
+  "glitched_text_spec": {
+    "corruption_rate_min": 0.05,
+    "corruption_rate_max": 0.30,
+    "trigger_threshold": 70,
+    "corruption_method": "unicode_combining",
+    "implementation_function": "corruptText(text, infectionLevel) → string — applies 1-3 random Unicode combining marks (U+0300-U+036F) to ASCII letters at linear rate from 5% (infection=70) to 30% (infection=95). CJK characters and punctuation preserved unmodified. Called from typewriterEffect() before character-by-character rendering."
+  },
+  "implementation_notes": {
+    "code_changes_required": [
+      "frontend/js/app.js — Add visitedScenes Set + visitCounts object (prerequisite, ~8 lines)",
+      "frontend/js/app.js — Populate visitedScenes in applyGameResponse() on scene_trigger (~5 lines)",
+      "frontend/js/app.js — Wire TRIGGER-01 (viewer bump) and TRIGGER-04 (white flash) checks (~20 lines)",
+      "frontend/js/renderer.js — Add corruptText() function + integrate into typewriterEffect() (~25 lines)",
+      "frontend/js/renderer.js — Add fragment display non-repeat Set tracking (~5 lines)",
+      "frontend/js/background.js — Add infection-gated fog density multiplier for TRIGGER-03 and H8 (~15 lines)",
+      "frontend/js/background.js — Add white flash rendering for TRIGGER-04 (~10 lines)",
+      "frontend/js/audio.js — Add cross-scene frozen drip check in createRainDrips() for TRIGGER-02 (~10 lines)",
+      "frontend/js/audio.js — Add dissonant drone layer for H6 snow_bridge (~20 lines)",
+      "frontend/js/audio.js — Add irregular drip interval mode for H2 (~10 lines)",
+      "frontend/js/scenes/rain_underpass.js — Add graffiti CanvasTexture decal creation for H1 (~30 lines)",
+      "frontend/js/scenes/rain_underpass.js — Add fluorescent flicker logic for H3 (~10 lines)",
+      "frontend/js/scenes/snow_bridge.js — Add footprint geometry for H4 (~25 lines)",
+      "frontend/js/scenes/snow_bridge.js — Add dynamic lit window toggle for H5 (~15 lines)",
+      "frontend/js/scenes/fog_highway.js — Add car wreck mesh for H7 (~30 lines)",
+      "frontend/js/scenes/blizzard_street.js — Add streetlight toggle for H9 (~10 lines)",
+      "frontend/js/scenes/blizzard_street.js — Add emergency light blinking for H10 (~20 lines)",
+      "frontend/js/scenes/blizzard_street.js — Add blizzard intensity scaling for TRIGGER-05 (~15 lines)",
+      "frontend/js/dreamcore.js — Add trigger condition checks before fragment display (~15 lines)"
+    ],
+    "new_files_needed": [],
+    "estimated_effort_hours": 5.5
+  }
+}

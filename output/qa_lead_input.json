@@ -1,0 +1,40 @@
+{
+  "game_url": "http://localhost:8765",
+  "prd_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/enhancement_prd.md",
+  "prd_json_path": "C:/Users/qwqwh/.claude/projects/game-enhancement-agents/output/enhancement_prd_output.json",
+  "phase_to_verify": "phase_1",
+  "test_depth": "standard",
+  "scene_test_order": [
+    "fog_highway",
+    "rain_underpass",
+    "snow_bridge",
+    "blizzard_street"
+  ],
+  "known_bugs": [
+    {
+      "bug_id": "BUG-01",
+      "description": "Scene dispose() not wrapped in try/catch",
+      "severity": "critical"
+    },
+    {
+      "bug_id": "BUG-02",
+      "description": "CRT CSS/WebGL double-processing",
+      "severity": "high"
+    },
+    {
+      "bug_id": "BUG-03",
+      "description": "WebSocket timeout too generous",
+      "severity": "high"
+    },
+    {
+      "bug_id": "BUG-04",
+      "description": "Fragment counter caps at 99",
+      "severity": "medium"
+    },
+    {
+      "bug_id": "BUG-05",
+      "description": "No scene load failure handling",
+      "severity": "medium"
+    }
+  ]
+}

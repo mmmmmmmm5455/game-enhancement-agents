@@ -1,0 +1,133 @@
+{
+  "audio_design_doc": {
+    "philosophy": "The sonic identity of Millennium Bug Incident derives from three principles rooted in Y2K dark cyan liminal space aesthetic: diegetic purity, frequency restraint, and sparse presence. No background music exists — every sound originates from within the game world. This isn't a budget decision; it's the core emotional mechanic. Loneliness is not something the player is told about, it is something they hear in the vast negative space between sparse environmental events. All ambient drones occupy the sub-bass through low-mid range (<200Hz dominant). This is deliberate: low frequencies create unease without the player consciously registering the source. The drones are felt as chest pressure, not heard as music. The Y2K aesthetic — degraded, cold, technological decay — manifests sonically through: oscillator-based synthesis (no acoustic samples), low-pass filtering that removes presence and warmth, and slow LFO modulation that creates an organic instability reminiscent of failing CRT monitors. Volume sits at 20% maximum — just above the threshold of perception. The audio layer is ambient infrastructure, not foreground content. When text glitches at infection >70%, the audio does not glitch with it. The contrast between corrupted text and stable low drone reinforces that the corruption is in the system, not the environment.",
+    "sound_palette": [
+      {
+        "category": "drone",
+        "description": "Sustained sub-bass ambient foundation, one per scene, oscillator-synthesized with per-scene waveform and LFO modulation",
+        "frequency_range": "50-200Hz",
+        "volume_pct": 15
+      },
+      {
+        "category": "wind",
+        "description": "Distant wind: white noise bandpassed 200-400Hz, continuous loop, fog_highway scene",
+        "frequency_range": "200-400Hz",
+        "volume_pct": 5
+      },
+      {
+        "category": "wind",
+        "description": "Wind gust: pink noise lowpassed 300Hz, slow 0.1Hz LFO on gain for organic swell, snow_bridge scene",
+        "frequency_range": "20-300Hz",
+        "volume_pct": 6
+      },
+      {
+        "category": "wind",
+        "description": "Wind howl: white noise bandpassed 150-500Hz, 0.3Hz LFO on gain for cyclical howl, blizzard_street scene",
+        "frequency_range": "150-500Hz",
+        "volume_pct": 7
+      },
+      {
+        "category": "water",
+        "description": "Water drip echo: short filtered white noise bursts (0.4s decay), pseudo-random 2-5s intervals, bandpass 400-1200Hz, rain_underpass scene",
+        "frequency_range": "400-1200Hz",
+        "volume_pct": 8
+      },
+      {
+        "category": "ui_sfx",
+        "description": "Reserved for future: glitch tick, system beep on infection critical — not yet implemented",
+        "frequency_range": "N/A",
+        "volume_pct": 0
+      },
+      {
+        "category": "particle",
+        "description": "Not implemented — particle sounds would break diegetic sound constraint",
+        "frequency_range": "N/A",
+        "volume_pct": 0
+      }
+    ],
+    "mix_spec": {
+      "master_volume": 0.20,
+      "ducking_rules": [
+        "system_dialog: duck ambient gain by 50% for duration of system message display",
+        "infection_critical: no ducking — audio remains stable to contrast with glitched text",
+        "scene_transition: 3-second linear crossfade synchronized with CRT visual crossfade in background.js"
+      ]
+    }
+  },
+  "scene_audio_specs": [
+    {
+      "scene_id": "fog_highway",
+      "drone_params": {
+        "base_frequency": 100,
+        "waveform": "sawtooth",
+        "filter_type": "lowpass",
+        "filter_frequency": 180,
+        "modulation": "0.3Hz sine on oscillator frequency ±8Hz"
+      },
+      "environmental_sounds": [
+        {
+          "type": "wind_distant",
+          "implementation": "white_noise → bandpass(200,400) → gain(0.05), 2s looped buffer",
+          "volume_pct": 5
+        }
+      ]
+    },
+    {
+      "scene_id": "rain_underpass",
+      "drone_params": {
+        "base_frequency": 80,
+        "waveform": "sine",
+        "filter_type": "lowpass",
+        "filter_frequency": 200,
+        "modulation": "none (stable)"
+      },
+      "environmental_sounds": [
+        {
+          "type": "water_drip",
+          "implementation": "white_noise → bandpass(800, Q=2) → gain envelope(0→peak in 20ms, decay 400ms) at random 2-5s intervals",
+          "volume_pct": 8
+        }
+      ]
+    },
+    {
+      "scene_id": "snow_bridge",
+      "drone_params": {
+        "base_frequency": 60,
+        "waveform": "triangle",
+        "filter_type": "lowpass",
+        "filter_frequency": 150,
+        "modulation": "0.2Hz sine on drone gain ±0.03"
+      },
+      "environmental_sounds": [
+        {
+          "type": "wind_gust",
+          "implementation": "pink_noise → lowpass(300) → gain(0.06) with 0.1Hz sine LFO ±0.02 on gain",
+          "volume_pct": 6
+        }
+      ]
+    },
+    {
+      "scene_id": "blizzard_street",
+      "drone_params": {
+        "base_frequency": 50,
+        "waveform": "square",
+        "filter_type": "lowpass",
+        "filter_frequency": 120,
+        "modulation": "0.5Hz sine on filter frequency ±15Hz"
+      },
+      "environmental_sounds": [
+        {
+          "type": "wind_howl",
+          "implementation": "white_noise → bandpass(150,500) → gain(0.07) with 0.3Hz sine LFO ±0.04 on gain",
+          "volume_pct": 7
+        }
+      ]
+    }
+  ],
+  "implementation_artifacts": {
+    "audio_js_path": "frontend/js/audio.js",
+    "web_audio_api_code": true,
+    "crossfade_implemented": true,
+    "scene_count_covered": 4
+  }
+}

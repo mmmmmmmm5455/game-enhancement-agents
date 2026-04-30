@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "creative-director-output",
+  "title": "Creative Director Output",
+  "type": "object",
+  "required": ["design_review_report", "final_score", "signoff"],
+  "properties": {
+    "design_review_report": {
+      "type": "object",
+      "required": ["per_dimension_scores", "conflicts_resolved", "remaining_issues"],
+      "properties": {
+        "per_dimension_scores": {
+          "type": "object",
+          "required": ["color_palette", "crt_effects", "typography", "scene_atmosphere"],
+          "properties": {
+            "color_palette": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 20%" },
+            "crt_effects": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 20%" },
+            "typography": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 10%" },
+            "scene_atmosphere": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 20%" },
+            "audio_design": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 10%" },
+            "narrative_consistency": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 10%" },
+            "accessibility": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Weight 10%" }
+          }
+        },
+        "conflicts_resolved": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["conflict", "source_a_position", "source_b_position", "resolution", "rationale"],
+            "properties": {
+              "conflict": { "type": "string", "description": "What the conflict is about" },
+              "source_a_position": { "type": "string", "description": "Phase B (art review) position + evidence" },
+              "source_b_position": { "type": "string", "description": "Phase C (video research) position + evidence" },
+              "resolution": { "type": "string", "description": "Binding decision" },
+              "rationale": { "type": "string", "description": "Why this resolution was chosen (2-5 sentences)" }
+            }
+          }
+        },
+        "remaining_issues": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Issues that could not be resolved and block signoff"
+        }
+      }
+    },
+    "final_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Weighted composite score across all reviewed dimensions"
+    },
+    "signoff": {
+      "type": "object",
+      "required": ["approved", "conditions"],
+      "properties": {
+        "approved": {
+          "type": "boolean",
+          "description": "true if game meets Y2K Dark Cyan Liminal Space aesthetic at target score"
+        },
+        "signoff_type": {
+          "type": "string",
+          "enum": ["APPROVED", "CONDITIONAL", "REJECTED"],
+          "description": "APPROVED: score >= target, no blockers. CONDITIONAL: score close but N conditions must be met. REJECTED: score far below or M blockers."
+        },
+        "conditions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Conditions that must be met before ship (empty if APPROVED)"
+        }
+      }
+    }
+  }
+}

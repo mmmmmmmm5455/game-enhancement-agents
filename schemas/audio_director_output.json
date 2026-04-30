@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audio-director-output",
+  "title": "Audio Director Output",
+  "type": "object",
+  "required": ["audio_design_doc", "scene_audio_specs", "implementation_artifacts"],
+  "properties": {
+    "audio_design_doc": {
+      "type": "object",
+      "required": ["philosophy", "sound_palette", "mix_spec"],
+      "properties": {
+        "philosophy": {
+          "type": "string",
+          "minLength": 200,
+          "maxLength": 5000,
+          "description": "Audio direction rationale explaining how sound design serves the Y2K dark cyan liminal aesthetic"
+        },
+        "sound_palette": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["category", "description", "frequency_range", "volume_pct"],
+            "properties": {
+              "category": { "type": "string", "enum": ["drone", "footstep", "wind", "water", "ui_sfx", "particle"] },
+              "description": { "type": "string" },
+              "frequency_range": { "type": "string", "description": "e.g., '50-200Hz', '200-400Hz'" },
+              "volume_pct": { "type": "integer", "minimum": 0, "maximum": 100 }
+            }
+          }
+        },
+        "mix_spec": {
+          "type": "object",
+          "required": ["master_volume", "ducking_rules"],
+          "properties": {
+            "master_volume": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "ducking_rules": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "e.g., 'system_dialog: duck ambient by 50% for duration'"
+            }
+          }
+        }
+      }
+    },
+    "scene_audio_specs": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["scene_id", "drone_params", "environmental_sounds"],
+        "properties": {
+          "scene_id": { "type": "string", "enum": ["rain_underpass", "snow_bridge", "fog_highway", "blizzard_street"] },
+          "drone_params": {
+            "type": "object",
+            "required": ["base_frequency", "waveform", "filter_type", "filter_frequency", "modulation"],
+            "properties": {
+              "base_frequency": { "type": "integer", "minimum": 20, "maximum": 500 },
+              "waveform": { "type": "string", "enum": ["sine", "triangle", "sawtooth", "square"] },
+              "filter_type": { "type": "string", "enum": ["lowpass", "bandpass", "highpass"] },
+              "filter_frequency": { "type": "integer", "minimum": 50, "maximum": 2000 },
+              "modulation": { "type": "string", "description": "LFO description, e.g., '0.3Hz sine on frequency ±10Hz'" }
+            }
+          },
+          "environmental_sounds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["type", "implementation", "volume_pct"],
+              "properties": {
+                "type": { "type": "string", "description": "e.g., 'wind', 'water_drip', 'snow_crunch'" },
+                "implementation": { "type": "string", "description": "Web Audio API node chain, e.g., 'white_noise → bandpass(200,400) → gain(0.05)'" },
+                "volume_pct": { "type": "integer", "minimum": 0, "maximum": 20 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "implementation_artifacts": {
+      "type": "object",
+      "required": ["audio_js_path", "web_audio_api_code", "crossfade_implemented", "scene_count_covered"],
+      "properties": {
+        "audio_js_path": { "type": "string", "description": "Path to created audio.js, e.g., 'frontend/js/audio.js'" },
+        "web_audio_api_code": { "type": "boolean", "description": "true if audio.js contains working Web Audio API code" },
+        "crossfade_implemented": { "type": "boolean", "description": "true if GainNode crossfade exists" },
+        "scene_count_covered": { "type": "integer", "minimum": 0, "maximum": 4, "description": "How many of the 4 scenes have drone audio" }
+      }
+    }
+  }
+}

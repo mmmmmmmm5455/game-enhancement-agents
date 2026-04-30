@@ -1,0 +1,249 @@
+{
+  "prd_version": "1.0",
+  "generated_date": "2026-04-30",
+  "source_reports": {
+    "phase_a_game_test": "output/game_test_report.md",
+    "phase_b_art_review": "output/art_review_report.md",
+    "phase_b_art_review_json": "output/art_reviewer_output.json",
+    "phase_c_video_research": "output/video_research_report.md",
+    "phase_c_video_synth_json": "output/video_synth_output.json"
+  },
+  "executive_summary": {
+    "current_overall_score": 57,
+    "target_overall_score": 90,
+    "current_bugs_open": 5,
+    "current_critical_bugs": 1,
+    "key_improvement_areas": [
+      {
+        "rank": 1,
+        "area": "Color Palette Enforcement",
+        "current_score": 52,
+        "target_score": 95,
+        "effort_hours": 0.5,
+        "impact": "transformative",
+        "rationale": "8 warm color violations across CSS and 3D scenes break the cold Y2K dark-cyan palette — the single most visible aesthetic defect"
+      },
+      {
+        "rank": 2,
+        "area": "Fog Calibration Across All 4 Scenes",
+        "current_score": 60,
+        "target_score": 90,
+        "effort_hours": 1.0,
+        "impact": "transformative",
+        "rationale": "Fog is the defining PS1 horror technique per 5 of 6 video sources; 3 of 4 scenes have fog bugs (wrong type, wrong density, wrong color)"
+      },
+      {
+        "rank": 3,
+        "area": "CRT Effect Deduplication (CSS vs WebGL)",
+        "current_score": 25,
+        "target_score": 85,
+        "effort_hours": 3.0,
+        "impact": "high",
+        "rationale": "CSS scanlines and chromatic aberration are applied ON TOP of WebGL shader effects causing double-processing artifacts — Phase A BUG-02"
+      },
+      {
+        "rank": 4,
+        "area": "WebGL CRT Shader Enhancement",
+        "current_score": 25,
+        "target_score": 85,
+        "effort_hours": 4.0,
+        "impact": "transformative",
+        "rationale": "WebGL shader already has 6 of 7 effects but missing barrel distortion; video research confirms multi-texture CRT compositing as gold standard"
+      },
+      {
+        "rank": 5,
+        "area": "Minimal Audio Atmosphere",
+        "current_score": 0,
+        "target_score": 80,
+        "effort_hours": 4.0,
+        "impact": "high",
+        "rationale": "3 of 6 video sources identify sparse audio as critical to PS1 horror loneliness; no audio system currently exists"
+      }
+    ],
+    "total_estimated_effort_hours": 40,
+    "total_estimated_effort_range": "23-35 hours across 3 phases"
+  },
+  "art_style_analysis": {
+    "overall_score": 57,
+    "palette_compliance": {
+      "score": 52,
+      "violations": [
+        {"file": "snow_bridge.js", "line": 19, "element": "Streetlight color", "actual": "0xffcc66", "expected": "0x00bcd4", "severity": "high", "status": "open"},
+        {"file": "snow_bridge.js", "line": 31, "element": "Housing emissive", "actual": "0xffaa22", "expected": "0x006064", "severity": "high", "status": "open"},
+        {"file": "snow_bridge.js", "line": 67, "element": "Snow particles", "actual": "0xffffff", "expected": "0xc0d8f0", "severity": "medium", "status": "open"},
+        {"file": "blizzard_street.js", "line": 9, "element": "Fog color", "actual": "0x1a1015", "expected": "0x001a2e", "severity": "high", "status": "open"},
+        {"file": "blizzard_street.js", "line": 17, "element": "Emergency light", "actual": "0xcc2233", "expected": "0xff1744", "severity": "low", "status": "open"},
+        {"file": "blizzard_street.js", "line": 48, "element": "Alarm box emissive", "actual": "0x440000", "expected": "0x1a0000", "severity": "medium", "status": "open"},
+        {"file": "main.css", "line": 22, "element": "--color-sick-green", "actual": "#33FF33", "expected": "#00ff41", "severity": "high", "status": "open"},
+        {"file": "main.css", "line": 25, "element": "--color-cold-cyan", "actual": "#88CCFF", "expected": "#00e5ff", "severity": "medium", "status": "open"},
+        {"file": "main.css", "line": 24, "element": "--color-dark-brown", "actual": "was #8B4513", "expected": "#ffab00", "severity": "critical", "status": "fixed_p1"},
+        {"file": "counters.css", "line": 14, "element": "#fragment-counter", "actual": "var(--color-dark-brown)", "expected": "cold amber via variable fix", "severity": "critical", "status": "fixed_p1"}
+      ]
+    },
+    "crt_authenticity": {
+      "score": 25,
+      "effects": {
+        "scanlines": {"status": "present_webgl", "file": "background.js:42", "note": "Also present in crt.css (DUPLICATE — BUG-02)"},
+        "noise_grain": {"status": "present_webgl", "file": "background.js:43", "note": "Procedural rand(); texture-based would be higher quality"},
+        "chromatic_aberration": {"status": "present_webgl", "file": "background.js:47-48", "note": "Also present in crt.css text-shadow (DUPLICATE — BUG-02)"},
+        "color_quantization": {"status": "present_webgl", "file": "background.js:48", "note": "5-bit (31 levels) — correct PS1 spec"},
+        "cold_cyan_tinting": {"status": "present_webgl", "file": "background.js:50", "note": "mix toward vec3(0.0, 0.2, 0.267)"},
+        "luminance_banding": {"status": "present_webgl", "file": "background.js:51-52", "note": "16-level luminance quantization"},
+        "vignette": {"status": "present_webgl", "file": "background.js:53", "note": "distance-from-center darkening"},
+        "barrel_distortion": {"status": "missing", "note": "Required for full CRT emulation per Source 3 (WebGL CRT video)"},
+        "flicker": {"status": "present_webgl", "file": "background.js:44", "note": "Time-based random flicker"}
+      }
+    },
+    "typography": {"score": 82, "status": "strong", "minor_issues": ["counters.css:6 11px font needs ≥12px"]},
+    "scene_atmosphere": {
+      "rain_underpass": {"score": 72, "primary_issue": "Fog near-plane at 20 (too close)", "fix_task": "P1-FOG-03"},
+      "snow_bridge": {"score": 55, "primary_issue": "Warm streetlight + flat black Fog (needs FogExp2)", "fix_task": "P1-COLOR-01, P1-FOG-02"},
+      "fog_highway": {"score": 78, "primary_issue": "FogExp2 density 0.0006 (too light)", "fix_task": "P1-FOG-01"},
+      "blizzard_street": {"score": 60, "primary_issue": "Warm purple fog + warm emergency lights", "fix_task": "P1-COLOR-03, P1-COLOR-04"}
+    }
+  },
+  "video_research_insights": {
+    "total_videos": 6,
+    "total_words": 23574,
+    "consensus_themes": [
+      "Fog is the defining PS1 horror technique — implement aggressively in all scenes",
+      "CRT requires multi-effect compositing, not single-effect overlay",
+      "Low-res textures + point filtering are structural requirements, not cosmetic",
+      "Cold color palette is non-negotiable for horror atmosphere",
+      "Loneliness via minimal sound design creates more tension than populated environments"
+    ],
+    "contradictions_resolved": [
+      {
+        "topic": "Unity terrain for PS1",
+        "resolution": "Not applicable to Three.js; manually construct low-poly geometry"
+      },
+      {
+        "topic": "CSS vs WebGL CRT",
+        "resolution": "WebGL shader is authoritative; CSS reduced to non-WebGL fallback only"
+      }
+    ],
+    "key_technical_references": [
+      {"source": "SUiWNgf96WA", "topic": "WebGL CRT multi-texture compositing", "applicability": "direct"},
+      {"source": "YyFx5HDbgSU", "topic": "PSX shader pipeline configuration", "applicability": "translated_to_threejs"},
+      {"source": "AOgl-MRi26A", "topic": "Haunted PS1 Renderer global volume effects", "applicability": "translated_to_threejs"}
+    ]
+  },
+  "implementation_roadmap": {
+    "phase_1": {
+      "name": "Critical Fixes",
+      "duration": "< 1 week",
+      "estimated_hours": 1.5,
+      "acceptance_criteria": [
+        "Art review score >= 75/100",
+        "Zero warm color values in any 3D scene file",
+        "FogExp2 present and calibrated in all 4 scenes",
+        "CRT effects applied once (WebGL shader authoritative, CSS reduced)",
+        "Zero 11px font sizes in CSS"
+      ],
+      "tasks": [
+        {"id": "P1-COLOR-01", "description": "Replace warm streetlight 0xffcc66 to 0x00bcd4 in snow_bridge.js:19,31", "owner_skill": "gameplay-programmer", "verification": "grep -nE '0xffcc66|0xffaa22' frontend/js/scenes/snow_bridge.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 15},
+        {"id": "P1-COLOR-02", "description": "Replace warm snow 0xffffff to 0xc0d8f0 in snow_bridge.js:67", "owner_skill": "gameplay-programmer", "verification": "grep -n '0xffffff' frontend/js/scenes/snow_bridge.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-COLOR-03", "description": "Replace warm fog 0x1a1015 to 0x001a2e in blizzard_street.js:9", "owner_skill": "gameplay-programmer", "verification": "grep -n '0x1a1015' frontend/js/scenes/blizzard_street.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-COLOR-04", "description": "Replace warm emergency colors in blizzard_street.js:17,48", "owner_skill": "gameplay-programmer", "verification": "grep -nE '0xcc2233|0x440000' frontend/js/scenes/blizzard_street.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 10},
+        {"id": "P1-COLOR-05", "description": "Fix CSS --color-sick-green: #33FF33 to #00ff41 in main.css:22", "owner_skill": "ui-programmer", "verification": "grep -n '#33FF33' frontend/css/main.css && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-COLOR-06", "description": "Fix CSS --color-cold-cyan: #88CCFF to #00e5ff in main.css:25", "owner_skill": "ui-programmer", "verification": "grep -n '#88CCFF' frontend/css/main.css && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-COLOR-07", "description": "Fix rain_underpass window light 0xffcc66 to 0x00bcd4", "owner_skill": "gameplay-programmer", "verification": "grep -n '0xffcc66' frontend/js/scenes/rain_underpass.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-FOG-01", "description": "Fog highway: FogExp2 density 0.0006 to 0.0015", "owner_skill": "gameplay-programmer", "verification": "grep -n '0.0006' frontend/js/scenes/fog_highway.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-FOG-02", "description": "Snow bridge: replace flat Fog with FogExp2(0x003344, 0.0012)", "owner_skill": "gameplay-programmer", "verification": "grep -n 'FogExp2' frontend/js/scenes/snow_bridge.js | grep -c . | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": ["P1-COLOR-01"], "effort_minutes": 10},
+        {"id": "P1-FOG-03", "description": "Rain underpass: extend fog near-plane 20 to 10", "owner_skill": "gameplay-programmer", "verification": "grep -n 'Fog.*,[[:space:]]*20' frontend/js/scenes/rain_underpass.js && echo FAIL || echo PASS", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-CRT-01", "description": "Remove CSS scanline overlay (duplicate of WebGL shader line 42)", "owner_skill": "ui-programmer", "verification": "grep -c 'repeating-linear-gradient' frontend/css/crt.css | xargs -I{} [ {} -eq 0 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-CRT-02", "description": "Remove CSS text-shadow chromatic aberration (duplicate of WebGL shader lines 47-48)", "owner_skill": "ui-programmer", "verification": "grep -c 'text-shadow.*rgba(255,0,0' frontend/css/crt.css | xargs -I{} [ {} -eq 0 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-CRT-03", "description": "Reduce CSS body::before radial-gradient opacity by 50% (non-WebGL fallback only)", "owner_skill": "ui-programmer", "verification": "grep -E 'opacity|rgba.*0\\.0[0-2]' frontend/css/crt.css | grep -c . | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 5},
+        {"id": "P1-BUG-01", "description": "Wrap scene dispose() in try/catch and null reference in background.js:148-150", "owner_skill": "gameplay-programmer", "verification": "grep -c 'try.*dispose' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 10},
+        {"id": "P1-BUG-03", "description": "Reduce WebSocket timeout from 12000 to 5000ms in app.js:111", "owner_skill": "gameplay-programmer", "verification": "grep -n '5000' frontend/js/app.js | grep -c . | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-UI-01", "description": "Bump bar label font from 11px to 12px in counters.css:6", "owner_skill": "ui-programmer", "verification": "grep -n 'font-size: 11px' frontend/css/counters.css | grep -c . | xargs -I{} [ {} -eq 0 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 2},
+        {"id": "P1-UI-02", "description": "Add asymmetric 5-15px left offset to dialog panel in panels.css:11", "owner_skill": "ui-programmer", "verification": "grep -cE 'left:[[:space:]]*[5-9]px|left:[[:space:]]*1[0-5]px' frontend/css/panels.css | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 2}
+      ]
+    },
+    "phase_2": {
+      "name": "Atmosphere & Polish",
+      "duration": "1-2 weeks",
+      "estimated_hours": 20,
+      "acceptance_criteria": [
+        "Art review score >= 85/100",
+        "All 7 CRT effects present in WebGL shader (including barrel distortion)",
+        "Audio system functional with 4 scene-specific ambient tracks",
+        "Dreamcore fragment overlay system operational",
+        "CRT toggle keybind [T] cycles off/light/full",
+        "GPU Instancing applied where applicable"
+      ],
+      "tasks": [
+        {"id": "P2-CRT-01", "description": "Add barrel distortion to WebGL post-processing shader", "owner_skill": "engine-programmer", "verification": "grep -cE 'barrel|curvature|distort' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": ["P1-CRT-01"], "effort_minutes": 180},
+        {"id": "P2-CRT-02", "description": "Enhance noise with texture-based sampling (replace procedural rand)", "owner_skill": "engine-programmer", "verification": "grep -cE 'noise.*texture|NoiseTexture' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 120},
+        {"id": "P2-CRT-03", "description": "Enhance vignette effect in WebGL shader", "owner_skill": "engine-programmer", "verification": "grep -cE 'vignette|length.*uv.*0\\.5' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 60},
+        {"id": "P2-CRT-04", "description": "Add CRT toggle keybind [T] cycling off/light/full", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'key.*t|crtMode|crtIntensity' frontend/js/app.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 30},
+        {"id": "P2-AUDIO-01", "description": "Create 4 ambient drone tracks (one per scene)", "owner_skill": "audio-director", "verification": "ls frontend/audio/ambient_*.mp3 2>/dev/null | wc -l | xargs -I{} [ {} -ge 4 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 180},
+        {"id": "P2-AUDIO-02", "description": "Implement Web Audio API scene-specific playback with crossfade", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'AudioContext|GainNode|crossfade' frontend/js/audio.js 2>/dev/null | xargs -I{} [ {} -ge 3 ] && echo PASS || echo FAIL", "depends_on": ["P2-AUDIO-01"], "effort_minutes": 180},
+        {"id": "P2-AUDIO-03", "description": "Add player footstep sounds with reverb", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'ConvolverNode|footstep|reverb' frontend/js/audio.js 2>/dev/null | xargs -I{} [ {} -ge 2 ] && echo PASS || echo FAIL", "depends_on": ["P2-AUDIO-02"], "effort_minutes": 120},
+        {"id": "P2-AUDIO-04", "description": "Add wind/water particle audio at 20% volume", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'wind|water|particle' frontend/js/audio.js 2>/dev/null | xargs -I{} [ {} -ge 2 ] && echo PASS || echo FAIL", "depends_on": ["P2-AUDIO-02"], "effort_minutes": 60},
+        {"id": "P2-DREAM-01", "description": "Create dreamcore fragment overlay system with fade in/out", "owner_skill": "ui-programmer", "verification": "grep -c 'dreamcore-fragment' frontend/js/dreamcore.js 2>/dev/null | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 60},
+        {"id": "P2-DREAM-02", "description": "Add 8-12 dreamcore fragment texts cycling randomly", "owner_skill": "ui-programmer", "verification": "grep -cE 'fragments|texts.*=' frontend/js/dreamcore.js 2>/dev/null | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": ["P2-DREAM-01"], "effort_minutes": 30},
+        {"id": "P2-FOG-01", "description": "Add procedural fog density variation (random walk +/-15%)", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'fog.*density.*random|fogDensity.*variation' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": ["P1-FOG-01"], "effort_minutes": 60},
+        {"id": "P2-PERF-01", "description": "Audit and apply InstancedMesh for particles, light poles, trees", "owner_skill": "engine-programmer", "verification": "grep -cE 'InstancedMesh|instanced' frontend/js/scenes/*.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 120},
+        {"id": "P2-PERF-02", "description": "Profile CRT shader GPU time (target <5ms at 1080p)", "owner_skill": "engine-programmer", "verification": "Manual: Chrome DevTools frame timing after P2-CRT-01", "depends_on": ["P2-CRT-01"], "effort_minutes": 60},
+        {"id": "P2-BUG-04", "description": "Add + suffix when fragment counter exceeds 99", "owner_skill": "ui-programmer", "verification": "grep -c '99.*\\+' frontend/js/renderer.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 5}
+      ]
+    },
+    "phase_3": {
+      "name": "Narrative & Integration",
+      "duration": "2-4 weeks",
+      "estimated_hours": 18.5,
+      "acceptance_criteria": [
+        "Art review score >= 90/100",
+        "All quality gates pass",
+        "Glitched text mode functional at infection > 70%",
+        "Fixed camera locks trigger on liminal zone entry",
+        "WCAG accessibility baseline met (aria-labels, contrast >= 4.5:1)",
+        "Final ccgs-design-review approves"
+      ],
+      "tasks": [
+        {"id": "P3-NAR-01", "description": "Implement glitched text mode when infection > 70%", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'glitch.*text|corrupt' frontend/js/renderer.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 90},
+        {"id": "P3-NAR-02", "description": "Add environmental text artifacts to 3D scenes (plane meshes with CanvasTexture)", "owner_skill": "technical-artist", "verification": "grep -cE 'textTexture|CanvasTexture' frontend/js/scenes/*.js | xargs -I{} [ {} -ge 2 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 120},
+        {"id": "P3-NAR-03", "description": "Add scene-specific ambient narrative hooks (environment changes on revisit)", "owner_skill": "game-designer", "verification": "Design doc review — not machine-checkable", "depends_on": ["P3-NAR-02"], "effort_minutes": 180},
+        {"id": "P3-CAM-01", "description": "Implement trigger-zone fixed-camera lock (3-5 second reveals)", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'cameraLock|fixedCamera' frontend/js/camera.js 2>/dev/null | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 120},
+        {"id": "P3-UI-01", "description": "Add loading/thinking indicator (animated ellipsis in top-bar)", "owner_skill": "ui-programmer", "verification": "grep -cE 'loading|thinking|ellipsis' frontend/js/app.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 30},
+        {"id": "P3-UI-02", "description": "Add scene load failure fallback (default to fog_highway + console.error)", "owner_skill": "gameplay-programmer", "verification": "grep -cE 'console.error.*scene|fallback.*fog_highway' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 15},
+        {"id": "P3-UI-03", "description": "Add WebGL context lost/restored handlers", "owner_skill": "engine-programmer", "verification": "grep -cE 'webglcontextlost|webglcontextrestored' frontend/js/background.js | xargs -I{} [ {} -ge 2 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 60},
+        {"id": "P3-A11Y-01", "description": "Add aria-label attributes to all interactive elements", "owner_skill": "accessibility-specialist", "verification": "grep -c 'aria-label' frontend/index.html | xargs -I{} [ {} -ge 5 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 60},
+        {"id": "P3-A11Y-02", "description": "Add keyboard shortcut hints to UI", "owner_skill": "accessibility-specialist", "verification": "grep -cE 'keyboard|shortcut|press.*T' frontend/index.html | xargs -I{} [ {} -ge 1 ] && echo PASS || echo FAIL", "depends_on": [], "effort_minutes": 30},
+        {"id": "P3-A11Y-03", "description": "Ensure color contrast ratio >= 4.5:1 for all text", "owner_skill": "accessibility-specialist", "verification": "npx axe-cli http://localhost:8765 (expect 0 violations)", "depends_on": [], "effort_minutes": 60},
+        {"id": "P3-REVIEW-01", "description": "Full game playthrough with all 4 scenes + transitions", "owner_skill": "qa-lead", "verification": "Manual: 20+ interaction path checklist", "depends_on": ["P3-NAR-01", "P3-CAM-01", "P3-UI-01", "P3-UI-02", "P3-UI-03"], "effort_minutes": 180},
+        {"id": "P3-REVIEW-02", "description": "Final ccgs-design-review pass against art bible", "owner_skill": "creative-director", "verification": "Manual: design review report", "depends_on": ["P3-REVIEW-01"], "effort_minutes": 120},
+        {"id": "P3-REVIEW-03", "description": "Performance audit: 60fps sustained all scenes with CRT on", "owner_skill": "performance-analyst", "verification": "Manual: Chrome DevTools frame timing", "depends_on": ["P3-REVIEW-01"], "effort_minutes": 60}
+      ]
+    }
+  },
+  "risk_register": [
+    {"risk": "WebGL CRT shader drops below 60fps on low-end GPUs", "severity": "high", "mitigation": "CRT toggle [T] for off/low/full; profile before merging"},
+    {"risk": "Audio system adds complexity without improving core aesthetic", "severity": "medium", "mitigation": "Use simple oscillator nodes; no file loading required for POC"},
+    {"risk": "CSS/WebGL CRT deduplication causes visual regression", "severity": "medium", "mitigation": "Keep CSS as #no-js fallback; gate removal on WebGL presence"},
+    {"risk": "Phase 1 warm color fixes make scenes too dark", "severity": "low", "mitigation": "Measured luminance parity in replacement colors"}
+  ],
+  "quality_gates": {
+    "phase_1": [
+      "grep -nE '0xffcc66|0xffcc44|0xffaa22' frontend/js/scenes/*.js && echo 'FAIL: warm colors' || echo 'PASS'",
+      "grep -n '0x1a1015' frontend/js/scenes/blizzard_street.js && echo 'FAIL: warm fog' || echo 'PASS'",
+      "grep -c 'FogExp2' frontend/js/scenes/snow_bridge.js | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL: no FogExp2'",
+      "grep -c 'repeating-linear-gradient' frontend/css/crt.css | xargs -I{} [ {} -eq 0 ] && echo 'PASS' || echo 'FAIL: duplicate scanlines'",
+      "grep -n '5000' frontend/js/app.js | grep -c . | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL: timeout not reduced'",
+      "grep -n 'font-size: 11px' frontend/css/counters.css | grep -c . | xargs -I{} [ {} -eq 0 ] && echo 'PASS' || echo 'FAIL: 11px font'"
+    ],
+    "phase_2": [
+      "grep -cE 'barrel|curvature|distort' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL'",
+      "grep -cE 'key.*t|crtMode|crtIntensity' frontend/js/app.js | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL'",
+      "ls frontend/audio/ambient_*.mp3 2>/dev/null | wc -l | xargs -I{} [ {} -ge 4 ] && echo 'PASS' || echo 'FAIL: missing audio'",
+      "grep -c 'dreamcore-fragment' frontend/js/dreamcore.js 2>/dev/null | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL'"
+    ],
+    "phase_3": [
+      "grep -c 'aria-label' frontend/index.html | xargs -I{} [ {} -ge 5 ] && echo 'PASS' || echo 'FAIL'",
+      "grep -cE 'webglcontextlost|webglcontextrestored' frontend/js/background.js | xargs -I{} [ {} -ge 2 ] && echo 'PASS' || echo 'FAIL'",
+      "grep -cE 'glitch.*text|corrupt' frontend/js/renderer.js | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL'",
+      "grep -cE 'console.error.*scene|fallback.*fog_highway' frontend/js/background.js | xargs -I{} [ {} -ge 1 ] && echo 'PASS' || echo 'FAIL'"
+    ]
+  }
+}

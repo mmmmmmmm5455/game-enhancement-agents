@@ -1,0 +1,18 @@
+{
+  "game_dir": "C:/Users/qwqwh/.claude/projects/multi-agent-plan/output",
+  "scene_ids": [
+    "fog_highway",
+    "rain_underpass",
+    "snow_bridge",
+    "blizzard_street"
+  ],
+  "target_aesthetic": "y2k_dark_cyan_liminal",
+  "audio_constraints": {
+    "no_background_music": true,
+    "diegetic_only": true,
+    "max_ambient_volume_pct": 20,
+    "dominant_frequency_range_hz": "<200",
+    "output_format": "web_audio_api",
+    "crossfade_duration_ms": 3000
+  }
+}
