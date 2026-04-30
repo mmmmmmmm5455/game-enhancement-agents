@@ -3,7 +3,7 @@
 **研究日期：** 2026-04-30
 **研究方法：** YouTube 字幕提取（yt-dlp + 自動字幕）+ 網頁文章擷取（curl）+ 學術文獻回顧
 **影片來源：** 5 組關鍵字 × 2-3 部影片 = 12 部影片字幕（3 部完整轉錄）
-**文字來源：** uisdc.com, beefyheisenberg, vapor95, creativebloq, gamedeveloper.com, Wikipedia, Aesthetics Wiki, PhilPapers (Wu 2022)
+**文字來源：** uisdc.com, beefyheisenberg, vapor95, creativebloq, gamedeveloper.com, Wikipedia, Aesthetics Wiki, PhilPapers (Wu 2022), vivepostwave.com (2026 全解析), polydin.com (liminal horror in games), tiesthatbindgaming.com (audio/visual design), Bilkent thesis (hauntology)
 
 ---
 
@@ -326,3 +326,152 @@ Dreamcore 元素的作用是**提供對比**——就像一幅冷色調畫作中
 12. Pools (2024) — Backrooms-inspired liminal horror
 13. Interior Worlds (sodaraptor, 2023) — Liminal space photography game
 14. Superliminal (Pillow Castle, 2019) — Forced perspective puzzle game
+15. Subliminal (2025) — UE5 Backrooms-inspired psychological horror
+16. LIMINAL PHASE (2024) — VR liminal space horror
+
+### 第二輪補充來源（2026-04-30 新關鍵字搜索）
+17. vivepostwave.com — "2026年還在流行的夢核是什麼？從怪核、閾限空間到K-pop都在用的網路美學全解析" (2026-03-12)
+18. polydin.com — "Haunted by Emptiness: How Liminal Horror Aesthetics Took Over Video Games"
+19. tiesthatbindgaming.com — "Liminal Spaces in Video Games | Lost in Uncanny Dread" (含 Eerie Soundscapes 專節)
+20. blog.youtube — "Why we love to wander the empty halls of the internet's creepiest aesthetic"
+21. techmash.co.uk — "Lost in the Loop: Why Dreamcore is the Ultimate Liminal Space Experience"
+22. Kotaku — "Dreamcore Is One Of The Creepiest Games Of 2025"
+23. Valentina Tanni — "Exit Reality: Vaporwave, Backrooms, Weirdcore and Other Landscapes Beyond the Threshold" (2024)
+
+---
+
+## 6. 補充研究：第二輪關鍵字搜索新發現
+
+### 6.1 Internet -core 美學的完整家族樹
+
+vivepostwave.com (2026-03-12) 提供了至今最完整的「核」類美學分類，共 8 種亞型：
+
+| -core 類型 | 核心特徵 | 與 Dreamcore/Liminal 的關係 |
+|-----------|---------|--------------------------|
+| **Dreamcore** | 低像素、濃厚顆粒感、過曝/模糊影像，模仿不清晰記憶 | 本體 |
+| **Weirdcore** | 低品質影像 + 混亂迷失氛圍，odd color palettes | Dreamcore 的近親（常被混淆） |
+| **Liminal Space** | 過渡性空間場景（走廊、停車場、樓梯間） | Dreamcore 的載體 |
+| **Kidcore** | 明亮色彩、玩具、卡通元素，童年純真 | Dreamcore 的「溫暖面」來源 |
+| **Poolcore** | 泳池、水體、瓷磚紋理，寧靜+詭異 | Liminal 的子分支 |
+| **Traumacore** | 可愛元素 + 創傷主題對比，心理防禦機制 | Dreamcore 的「不安面」來源 |
+| **Webcore** | 早期網頁設計、GIF、低畫質數位意象 | 時間懷舊維度 |
+| **Voidcore** | 簡單、空白、偏暗色彩，對存在的靜謐凝視 | Liminal 的極端抽象化 |
+
+**設計啟示：** 你的遊戲已經觸及了其中 4 種（Liminal + Dreamcore + Weirdcore + Kidcore 的童年記憶碎片）。Poolcore 和 Voidcore 可作為未來場景擴展方向。
+
+### 6.2 Dreamcore 的起源故事（新發現）
+
+vivepostwave 提供了先前報告未涵蓋的精確起源：
+
+- **起點：** 2018 年，Tumblr 用戶 **jaaaaaim**（也稱 Jane/James）最早發起
+- **初始動機：** 創作者將創作視為「極度私人的潛意識表達」，試圖重現清醒與睡眠之間的感覺
+- **視覺方法：** 低像素 + 濃厚顆粒感 + 過曝或模糊的影像 → 模仿人類大腦中不清晰的記憶 → 營造「我好像來過這裡」的既視感
+- **從次文化到主流：** K-pop 女團 NewJeans〈Ditto〉MV 使用手持攝影機視角 + 復古特效；ILLIT 使用柔霧與低對比色調；虛擬女團 OWIS 以「進入夢境」為核心設定
+
+**對遊戲的啟示：** Dreamcore 的本質不是「奇幻」，而是「記憶的不精確性」。任何讓玩家懷疑「我是不是來過這裡」的設計，都比明顯的恐怖元素更 Dreamcore。
+
+### 6.3 Liminal Horror 的社會心理根源（Polydin 分析）
+
+polydin.com 提供了先前報告未涵蓋的深層分析：
+
+> "Liminality is a state of in-betweenness... A lot of modern life is about being in liminality. Airports, offices, stairways — they all exist to connect us from one place to another. But where is the destination?"
+
+**核心論點：** 晚期資本主義下的現代生活本身就是一種閾限狀態——永遠在過渡，永遠不到達。這解釋了閾限空間美學在 2020 年代大規模流行的社會心理根源。
+
+**對遊戲敘事的啟示：** Y2K 主題（千禧年）本身就是一個巨大的閾限時刻——舊千年已結束，新千年剛開始，所有人處於「之間」。你的遊戲主題與 Liminal Space 美學有**比表面更深的契合**。
+
+### 6.4 音效設計的細化指南（tiesthatbindgaming 專節）
+
+tiesthatbindgaming.com 的 "Eerie Soundscapes: Audio in Liminal Games" 專節提供了最詳細的音效設計建議：
+
+**核心原則：** 音樂應極少或完全缺席，讓環境音承擔全部情緒。
+
+| 音效元素 | 具體實現 | 對應你的遊戲 |
+|---------|---------|------------|
+| **螢光燈嗡嗡聲** | 50/60Hz hum + 輕微不規則閃爍 | rain_underpass 已實作 ✓ |
+| **遠處滴水聲** | 間隔不規則（3-12 秒隨機），reverb | rain_underpass H2 已實作 ✓ |
+| **HVAC/通風管道聲** | 低頻持續嗡鳴（40-80Hz），音量波動 | audio.js drone 系統已覆蓋 ✓ |
+| **遠處火車/交通工具** | 極低音量，bandpass filter | **新建議：** fog_highway 加入 |
+| **完全靜默** | 從噪音區突然進入無聲區 | **新建議：** emotion 達臨界值時觸發 2 秒完全靜默 |
+| **腳步聲材質差異** | 磁磚 vs 地毯 vs 積雪 vs 瀝青 | **新建議：** 每個場景使用不同 reverb 參數 |
+
+**關鍵洞察 — 靜默作為武器：**
+
+> "When you suddenly step from a noisy area into near silence, your ears perk up. Silence becomes the sound."
+
+現有 audio.js 已有 mute toggle [M]，但缺少**自動的、敘事驅動的靜默**。建議在特定 Narrative Hook 觸發時（如 H1 塗鴉出現、H7 廢棄車輛出現），先行 2 秒完全靜默，再恢復環境音。
+
+### 6.5 色彩設計的補充（tiesthatbindgaming 色彩觀察）
+
+tiesthatbindgaming 對 Liminal Space 色彩的描述補充了 Dreamcore 維度：
+
+> "Creators lean into familiar architecture and color palettes that look dated. Pastel or washed-out tones — faded yellows, dirty beiges, muted blues. Colors that feel **lived-in**. The effect is an atmosphere almost like an old photograph or a dream."
+
+| 色彩類別 | 原始報告建議 | 新補充 |
+|---------|------------|--------|
+| 褪色暖色 | 奶油黃、褪色橙（少量點綴） | **faded yellows, dirty beiges** — 加入「使用過的痕跡」 |
+| 朦朧冷色 | 低飽和青 #8a9bb0、薄霧灰藍 #7a8a9a | **muted blues** — 偏灰而非偏青，減少數位感 |
+| 顆粒感 | 35mm 底片顆粒 | **VHS 顆粒** — 更粗、更不規則，Dreamcore 2025 遊戲也用此技術 |
+
+**對現有 Y2K 冷青美學的修正建議：** 冷青基底保留，但全域加入 5-8% 的暖色偏移（sepia tone），模擬「舊照片」的時間距離感。這比純冷色 Liminal 更有 Dreamcore 融合感。
+
+### 6.6 新發現的遊戲案例
+
+第二輪搜索補足了 3 款第一輪未涵蓋的遊戲：
+
+| 遊戲 | 年份 | 類型 | 核心機制 | 新學到的 |
+|------|------|------|---------|---------|
+| **Subliminal** | 2025 | UE5 心理恐怖解謎 | Backrooms 啟發，超寫實渲染 | UE5 的高保真度 + Liminal Space 的低解析度懷舊形成張力 |
+| **LIMINAL PHASE** | 2024 | VR 恐怖 | 第一人稱公寓探索，空間扭曲 | VR 增強了 Liminal Space 的「被困感」到生理層面 |
+| **Dreamcore (Liminal Hotel DLC)** | 2025 | 步行模擬 | 閾限旅館關卡，VHS + UE5 | Dreamcore 遊戲持續更新 Liminal 主題關卡，證明兩者融合的市場需求 |
+
+### 6.7 Weirdcore vs Dreamcore 的明確邊界
+
+來自多個新來源的共識（vivepostwave, zhihu, vapor95, spacehey forum）：
+
+| 維度 | Dreamcore | Weirdcore |
+|------|-----------|-----------|
+| **情感目標** | 熟悉中的詭異（familiar → uncanny） | 直接的混亂與迷失（nonsensical → surreal） |
+| **影像來源** | 日常場景的陌生化處理 | 低品質網路圖片 + odd filters |
+| **色彩** | 柔和、朦朧、溫暖的陌生感 | 扭曲的色調、不協調的配色 |
+| **典型元素** | 空曠郊區、飄浮椅子、舊照片感 | 漂浮眼睛、巨大蘑菇、glitch rooms |
+| **心理效果** | 「我好像來過這裡」 | 「這是什麼東西」 |
+| **與你的遊戲關係** | 70% 匹配（記憶碎片、童年溫暖） | 30% 匹配（zalgo glitch text 偏向此類） |
+
+**對你遊戲的定位修正：**
+
+原始報告定位為「Y2K Cold-Cyan Liminal Horror (70%) + Surveillance + Glitch + 少量 Dreamcore」。補充研究後，更精確的定位應為：
+
+```
+Y2K Cold-Cyan Liminal Dreamcore (55%)
+  + Glitch Horror (zalgo → 偏向 Weirdcore, 20%)
+  + Surveillance Horror (viewer counter, 15%)
+  + Poolcore/Voidcore 潛力 (10%)
+```
+
+Zalgo glitch text 實際上是 **Weirdcore 元素混入了 Dreamcore 基礎**。這不是錯誤，但需要注意：glitch 越重，越偏 Weirdcore（混亂），越偏離 Dreamcore（夢境）。建議保持 zalgo 強度可調（現有 [T] toggle 控制 CRT 強度，可考慮加入 [G] toggle 控制 glitch 強度）。
+
+### 6.8 對原始報告 4 個 Dreamcore 切入點的補充
+
+| 原始建議 | 新來源支持 | 修正 |
+|---------|----------|------|
+| 1. 「記憶的溫度」— 褪色暖色光暈 | tiesthatbindgaming 的 "faded yellows, dirty beiges" | 改為全局 sepia offset (5-8%) 而非場景邊緣光暈 |
+| 2. 「似曾相識」— Fragment-Hook 聯動 | vivepostwave 的 "我好像來過這裡" 既視感 | **強化：** 加入模糊影像覆蓋層（2秒浮現/4秒消失），不僅文字 |
+| 3. 「扭曲的熟悉音」— 碎片音 | tiesthatbindgaming 的完整音效設計指南 | **新增：** Hook 觸發前 2 秒完全靜默 |
+| 4. 「夢的門」— 不可能存在的門 | polydin 的 "late-stage capitalism liminality" | **新增深度：** 門後顯示的不是奇幻空間，而是「另一個時代的日常」（如 2000 年代客廳），呼應 Y2K 主題 |
+
+---
+
+## 7. 最終結論（補充後更新）
+
+經過兩輪研究（第一輪 12 部影片 + 6 篇文章，第二輪 6 篇新文章），核心結論不變但更加精確：
+
+**你的遊戲不需要變成 Dreamcore。** 它已經是一個罕見的融合體——將 Y2K 冷青 Liminal Space 作為基底，Weirdcore glitch 作為不安層，Surveillance horror 作為 meta 層。Dreamcore 的「記憶的溫度」是最有價值的第四層——它提供對比，讓冷的更冷。
+
+**最具成本效益的下一步（按優先級排序）：**
+
+1. **全局 sepia offset (5-8%)** — 1 行 CSS `filter: sepia(0.05)` 或 shader uniform，立即增加「舊照片」時間距離感
+2. **Hook 觸發前 2 秒靜默** — audio.js 新增 `momentOfSilence(duration_ms)` 函數，3-5 行程式碼
+3. **Dreamcore Fragment 聯動計時器** — app.js 新增 setTimeout chain，hook 觸發後 3-8 秒顯示相關 fragment
+4. **[G] Glitch 強度 toggle** — 類似 [T] CRT toggle，讓玩家控制 zalgo 強度（Weirdcore 維度可控）
+5. **模糊影像覆蓋層** — CSS animation，童年物品剪影 2 秒浮現/4 秒消失
