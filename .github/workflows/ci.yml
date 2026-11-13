@@ -2,15 +2,24 @@ name: CI — game-enhancement-agents
 
 on:
   push:
-    branches: [main]
+    branches: [master, 'feature/**']
   pull_request:
-    branches: [main]
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
   validate:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Bash syntax check
         shell: bash
         run: bash -n orchestrate_enhancement.sh
+      - name: Verify CI branch contract
+        shell: pwsh
+        run: python -B -X utf8 -m unittest discover -s tests -p test_master_workflow_trigger.py -v
